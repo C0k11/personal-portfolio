@@ -52,8 +52,8 @@
                     </div>
                 </div>
                 <p class="hero-description">
-                    Computing student at Queen's University specializing in web development, 
-                    AI integration, and game architecture.
+                    AI Engineer and Computing student at Queen's University specializing in local LLM training, 
+                    full-stack development, and game architecture.
                 </p>
                 <div class="hero-cta">
                     <a href="#projects" class="btn btn-primary">
@@ -89,18 +89,19 @@
                     <p class="about-intro">
                         I'm a <span class="highlight">Computing Honours</span> student at Queen's University, 
                         graduating in April 2026. I specialize in 
-                        <span class="highlight">full-stack development</span>, <span class="highlight">AI integration</span>, 
+                        <span class="highlight">full-stack development</span>, <span class="highlight">AI engineering</span>, 
                         and <span class="highlight">game architecture</span>.
                     </p>
                     <p>
-                        Experienced in building cross-platform applications with Next.js and FastAPI, 
-                        real-time networked systems with Unity and Netcode, and AI-powered features 
+                        As an <span class="highlight">AI Engineer</span>, I have extensive experience training and fine-tuning 
+                        local LLM models (Qwen2.5, LoRA/QLoRA) for production applications. I build cross-platform applications 
+                        with Next.js and FastAPI, real-time networked systems with Unity and Netcode, and AI-powered features 
                         using Claude and FLUX models.
                     </p>
                     <div class="about-details">
                         <div class="detail-item">
                             <span class="detail-label">Location</span>
-                            <span class="detail-value">Toronto, ON, Canada</span>
+                            <span class="detail-value">Kingston, Ontario</span>
                         </div>
                         <div class="detail-item">
                             <span class="detail-label">Education</span>
@@ -126,7 +127,7 @@
                         <span class="stat-label">Years of Experience</span>
                     </div>
                     <div class="stat-card">
-                        <span class="stat-number">4+</span>
+                        <span class="stat-number">5+</span>
                         <span class="stat-label">Major Projects</span>
                     </div>
                     <div class="stat-card">
@@ -147,6 +148,39 @@
                 <div class="section-line"></div>
             </div>
             <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3 class="timeline-title">QuantAI - AI Quantitative Investment Assistant</h3>
+                            <span class="timeline-date">Dec 2025 – Present</span>
+                        </div>
+                        <h4 class="timeline-company">Personal Project</h4>
+                        <p class="timeline-location">Kingston, Ontario</p>
+                        <ul class="timeline-details">
+                            <li>Built a production-grade multimodal AI system for securities investment with 14 development phases, featuring multi-agent architecture with specialized experts (News Agent 3B, Scalper Agent 7B, Analyst Agent 7B with DPO)</li>
+                            <li>Implemented LLM fine-tuning pipeline using Qwen2.5 models with QLoRA, generating 25k+ teacher distillation samples via DeepSeek API for ETF/stock trading decisions</li>
+                            <li>Developed RAG-based historical retrieval system (FAISS) and deterministic RiskGate module with configurable drawdown/volatility constraints for position management</li>
+                            <li>Designed Adapter-MoE routing system with heuristic-based expert selection (Scalper vs Analyst) and rule-based planner gating for risk-aware decision making</li>
+                            <li>Implemented DPO (Direct Preference Optimization) training pipeline using TRL, successfully reducing Analyst expert's "permabull" bias by 74% (23→6 trades)</li>
+                            <li>Built comprehensive backtesting engine with NAV curve tracking, execution filters (Hold=Keep, Reverse-Confirm=2), and walk-forward evaluation framework</li>
+                            <li>Created automated daily pipeline: RSS news fetching (US/CN with fallback), LLM inference, signal evaluation (T+1 alignment), and Markdown report generation</li>
+                            <li>Developed Streamlit dashboard for real-time monitoring of NAV curves, order flow, risk events, and AI reasoning traces with RiskGate audit trails</li>
+                            <li>Achieved production metrics: 98.8% JSON parse success rate, 0.43% return (h=5) with -6.56% max drawdown, supporting 85+ stock symbols and 7 ETF indices</li>
+                        </ul>
+                        <div class="timeline-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">Qwen2.5</span>
+                            <span class="tag">LoRA/QLoRA</span>
+                            <span class="tag">RAG</span>
+                            <span class="tag">DPO/TRL</span>
+                            <span class="tag">FastAPI</span>
+                            <span class="tag">Streamlit</span>
+                            <span class="tag">Backtesting</span>
+                            <span class="tag">MoE</span>
+                        </div>
+                    </div>
+                </div>
                 <div class="timeline-item">
                     <div class="timeline-marker"></div>
                     <div class="timeline-content">
@@ -202,6 +236,47 @@
                 <div class="section-line"></div>
             </div>
             <div class="projects-grid">
+                <!-- QuantAI - Featured -->
+                <article class="project-card featured">
+                    <div class="project-image">
+                        <div class="project-placeholder" style="background: linear-gradient(135deg, #00d4ff 0%, #0066ff 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem; font-weight: 700;">
+                            QuantAI
+                        </div>
+                        <div class="project-overlay">
+                            <span class="project-type">AI Quant Platform</span>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">QuantAI</h3>
+                        <p class="project-subtitle">智能量化投顾助手 | AI Quantitative Investment Assistant</p>
+                        <p class="project-description">
+                            Advanced multimodal AI-powered securities investment assistant providing ETF portfolio strategy recommendations, 
+                            risk alerts, and explainable decisions. Features multi-agent architecture with specialized experts (News, Scalper, Analyst), 
+                            LLM fine-tuning (Qwen2.5 + LoRA), daily news pipeline, RAG retrieval, RiskGate constraints, MoE routing, DPO training, 
+                            and comprehensive backtesting with walk-forward evaluation.
+                        </p>
+                        <div class="project-tech">
+                            <span>Python</span>
+                            <span>Qwen2.5</span>
+                            <span>Multi-Agent</span>
+                            <span>LoRA/QLoRA</span>
+                            <span>RAG</span>
+                            <span>FastAPI</span>
+                            <span>Streamlit</span>
+                            <span>DPO/TRL</span>
+                            <span>Backtesting</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/C0k11/stock-share-Helper" target="_blank" class="project-link">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                                </svg>
+                                <span>View Code</span>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
                 <!-- SmartRoom-AI - Featured -->
                 <article class="project-card featured">
                     <div class="project-image">
@@ -410,6 +485,11 @@
                         <span class="skill-tag">Docker</span>
                         <span class="skill-tag">Three.js</span>
                         <span class="skill-tag">Tailwind CSS</span>
+                        <span class="skill-tag">LLM Fine-tuning</span>
+                        <span class="skill-tag">LoRA/QLoRA</span>
+                        <span class="skill-tag">RAG</span>
+                        <span class="skill-tag">DPO/TRL</span>
+                        <span class="skill-tag">Streamlit</span>
                     </div>
                 </div>
 
@@ -530,7 +610,7 @@
                             </div>
                             <div class="contact-text">
                                 <span class="contact-label">Location</span>
-                                <span class="contact-value">Toronto, ON, Canada</span>
+                                <span class="contact-value">Kingston, Ontario</span>
                             </div>
                         </div>
                     </div>
