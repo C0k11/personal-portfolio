@@ -317,19 +317,20 @@
                     </div>
                     <div class="project-content">
                         <h3 class="project-title">AI Game Secretary</h3>
-                        <p class="project-subtitle">Vision-based Game Automation Assistant</p>
+                        <p class="project-subtitle">Vision-based Game Automation + Real-time Battle Tracking</p>
                         <p class="project-description">
-                            Local automation assistant for Blue Archive (Steam/Windows) using computer vision. 
-                            Features screenshot capture with object detection and OCR, AI-driven state-based decision making, 
-                            automated click/swipe execution, and a desktop app with live dashboard. 
-                            Includes dataset collection and Florence model fine-tuning pipeline.
+                            Full-auto daily assistant for Blue Archive with 8-skill closed-loop automation and real-time 
+                            battle target locking. YOLOv8n + ByteTrack dual-stage tracking at 240Hz (DXcam), custom trained 
+                            models (mAP50 0.995), Florence-2 VQA for avatar matching, RapidOCR (CN/EN/JP), and Win32 
+                            transparent overlay at 250Hz. Includes web dashboard and trajectory recording system.
                         </p>
                         <div class="project-tech">
                             <span>Python</span>
-                            <span>Computer Vision</span>
-                            <span>OCR</span>
-                            <span>Florence</span>
-                            <span>PyAutoGUI</span>
+                            <span>YOLOv8</span>
+                            <span>ByteTrack</span>
+                            <span>Florence-2</span>
+                            <span>DXcam</span>
+                            <span>RapidOCR</span>
                             <span>FastAPI</span>
                         </div>
                         <div class="project-links">
@@ -383,7 +384,9 @@
                 <!-- SmartRoom-AI -->
                 <article class="project-card">
                     <div class="project-image">
-                        <img src="AI Room Designer.gif" alt="SmartRoom-AI Demo" class="project-preview">
+                        <div class="project-placeholder" style="background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.4rem; font-weight: 700;">
+                            SmartRoom-AI
+                        </div>
                         <div class="project-overlay">
                             <span class="project-type">Full-Stack AI App</span>
                         </div>
@@ -392,9 +395,9 @@
                         <h3 class="project-title">SmartRoom-AI</h3>
                         <p class="project-subtitle">AI Interior Design Assistant</p>
                         <p class="project-description">
-                            Cross-platform AI design app generating professional interior proposals from photos. 
-                            Features FastAPI backend with JWT auth, Three.js 3D visualization, React Native mobile app 
-                            with AR preview, and Claude AI for room analysis with real-time pricing from Amazon/IKEA.
+                            Cross-platform AI interior design app with web + React Native mobile (AR preview). Claude AI 
+                            room analysis, FLUX/DALL-E image generation, Three.js 3D visualization, multi-region shopping 
+                            cart (Amazon/IKEA/Taobao), design history cloud sync, and social sharing.
                         </p>
                         <div class="project-tech">
                             <span>Next.js</span>
@@ -402,6 +405,7 @@
                             <span>React Native</span>
                             <span>Three.js</span>
                             <span>FLUX</span>
+                            <span>Claude AI</span>
                         </div>
                         <div class="project-links">
                             <a href="https://github.com/C0k11/SmartRoom-AI" target="_blank" class="project-link">
@@ -417,7 +421,9 @@
                 <!-- AI Coding Teacher -->
                 <article class="project-card">
                     <div class="project-image">
-                        <img src="AI Coding Teacher.gif" alt="AI Coding Teacher Demo" class="project-preview">
+                        <div class="project-placeholder" style="background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.4rem; font-weight: 700;">
+                            AI Coding Teacher
+                        </div>
                         <div class="project-overlay">
                             <span class="project-type">Full-Stack AI Platform</span>
                         </div>
@@ -426,16 +432,17 @@
                         <h3 class="project-title">AI Coding Teacher</h3>
                         <p class="project-subtitle">Coding Platform & Interview Simulator</p>
                         <p class="project-description">
-                            Coding education platform with real-time collaborative battles and AI mock interviews. 
-                            Secure RCE system using Docker/Piston API, Socket.IO for 1v1 code battles, 
-                            and React Flow Knowledge Graph for personalized problem recommendations.
+                            Coding education platform with 49 curated algorithm problems (6 languages), real-time 1v1 
+                            code battles with ELO matchmaking, and AI mock interviews. AST-based code analysis with 
+                            complexity metrics, Winnowing plagiarism detection, React Flow Knowledge Graph, and bilingual UI.
                         </p>
                         <div class="project-tech">
                             <span>Next.js</span>
-                            <span>Python</span>
+                            <span>FastAPI</span>
                             <span>Docker</span>
                             <span>Socket.IO</span>
                             <span>React Flow</span>
+                            <span>Monaco</span>
                         </div>
                         <div class="project-links">
                             <a href="https://github.com/C0k11/AI-coding-teacher" target="_blank" class="project-link">
@@ -451,7 +458,9 @@
                 <!-- Castle Champions -->
                 <article class="project-card">
                     <div class="project-image">
-                        <img src="486 final demo.gif" alt="Castle Champions Demo" class="project-preview">
+                        <div class="project-placeholder" style="background: linear-gradient(135deg, #ec4899 0%, #be185d 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.4rem; font-weight: 700;">
+                            Castle Champions
+                        </div>
                         <div class="project-overlay">
                             <span class="project-type">Unity 3D Game</span>
                         </div>
@@ -484,7 +493,9 @@
                 <!-- Guizhou Haihong Corporate Website -->
                 <article class="project-card">
                     <div class="project-image">
-                        <img src="haihong demo.gif" alt="Guizhou Haihong Demo" class="project-preview">
+                        <div class="project-placeholder" style="background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.4rem; font-weight: 700;">
+                            Haihong Website
+                        </div>
                         <div class="project-overlay">
                             <span class="project-type">Corporate Website</span>
                         </div>
@@ -593,6 +604,9 @@
                         <span class="skill-tag">RAG</span>
                         <span class="skill-tag">DPO/TRL</span>
                         <span class="skill-tag">Streamlit</span>
+                        <span class="skill-tag">YOLOv8</span>
+                        <span class="skill-tag">Florence-2</span>
+                        <span class="skill-tag">ByteTrack</span>
                     </div>
                 </div>
 
@@ -622,6 +636,8 @@
                     <h3>Tools & Platforms</h3>
                     <div class="skill-tags">
                         <span class="skill-tag">Git/GitHub</span>
+                        <span class="skill-tag">PySide6 / Qt</span>
+                        <span class="skill-tag">Live2D</span>
                         <span class="skill-tag">Expo (Mobile)</span>
                         <span class="skill-tag">PostgreSQL</span>
                         <span class="skill-tag">Visual Studio</span>
