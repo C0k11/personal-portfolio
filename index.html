@@ -127,7 +127,7 @@
                         <span class="stat-label">Years of Experience</span>
                     </div>
                     <div class="stat-card">
-                        <span class="stat-number">7+</span>
+                        <span class="stat-number">8+</span>
                         <span class="stat-label">Major Projects</span>
                     </div>
                     <div class="stat-card">
@@ -158,27 +158,28 @@
                         <h4 class="timeline-company">Personal Project</h4>
                         <p class="timeline-location">Kingston, Ontario</p>
                         <ul class="timeline-details">
-                            <li>Built a production-grade multimodal AI system for securities investment across 24+ development phases, featuring multi-agent architecture on a single 7B base model with specialized LoRA adapters (Scalper, Analyst, News, System2 Debate) plus external VLM Chartist</li>
-                            <li>Implemented full LLM fine-tuning pipeline: SFT (Qwen2.5/Qwen3-8B + QLoRA), CoT distillation via DeepSeek, DPO preference alignment (TRL), and Planner SFT (Tabular MLP) with Offline RL Bandit Gatekeeper</li>
-                            <li>Designed Adapter-MoE routing with heuristic-based expert selection, System2 Critic/Judge debate for high-stakes trades, and rule-based Planner gating with MRI confidence scoring</li>
-                            <li>Built broker-grade Paper Trading engine: long/short positions, margin/leverage, settlement cycles, borrow fees, and automated liquidation with full execution audit trails</li>
-                            <li>Developed "Secretary Mari" desktop assistant (PySide6 + QtWebEngine + Live2D): deterministic Q&A from live positions, multi-intent dispatch, news Agent Hub with multi-analyst pipeline, and RLHF feedback loop</li>
-                            <li>Implemented Ouroboros night evolution: daytime trajectory collection → nightly SFT/DPO/Alpha-DPO dataset generation → Alpha Joint Evolution (multi-expert concurrent DPO training) with hot-reload adapter switching</li>
-                            <li>Built Visual Alpha / Chartist pipeline: OHLCV → K-line chart rendering → VLM inference (Ollama/vLLM) → structured technical signals, integrated as overlay in walk-forward evaluation</li>
-                            <li>Created automated daily pipeline: RSS news fetching (US/CN with fallback), LLM inference, signal evaluation (T+1 alignment), Markdown report generation, and Paper Trading ledger/NAV tracking</li>
-                            <li>Developed Streamlit + desktop dashboards for real-time monitoring of NAV curves, order flow, risk events, AI reasoning traces, and RiskGate audit trails</li>
+                            <li>Designed an event-driven multi-agent strategy (3,453-line MultiAgentStrategy) on a single Qwen2.5-7B base: rule/SFT Planner + RL-Q Gatekeeper + MoE Router → {Scalper LoRA, Analyst DPO LoRA}, with a Qwen2.5-VL-3B Chartist overlay, System 2 Critic/Judge debate, Macro Governor, and a 40bps passive-execution simulator</li>
+                            <li>Built the full LLM training pipeline (71 scripts): SFT + QLoRA, CoT distillation from DeepSeek, DPO / Alpha Joint Evolution (multi-expert concurrent), surgical-DPO, Chartist VLM SFT, and walk-forward eval — trained 25+ adapter checkpoints (v1–v4, alpha-from-PnL, Ouroboros, triple-train, news-noise-killer)</li>
+                            <li>Implemented a complete Online RL framework (ExperienceBuffer, RewardShaper, PreferenceLogger, OnlineLearningManager) for live Q-network updates, plus an "Ouroboros" night-evolution pipeline that auto-builds nightly SFT/DPO datasets from daytime trajectories with hot-reload adapter switching</li>
+                            <li>Shipped a 6,480-line FastAPI backend with <b>48 REST endpoints</b> covering live trading, backtest runs, evolution train/start/status/stop, RL start/stop, news submission, agent audit, chat, feedback, and LLM warmup/unload</li>
+                            <li>Built a broker-grade Paper Trading engine (long/short, margin, settlement, borrow fees, automated liquidation, full audit trails), MarketRAG retrieval, RegimeDetector, RiskGate with drawdown/volatility alerts, and a Narrator pipeline for LLM-generated trade explanations</li>
+                            <li>Delivered a 4-surface frontend: PySide6 + QtWebEngine desktop shell with QWebChannel-bridged Live2D characters (Mari / Changli / Arcueid) and a chat-first text dialog with Mari, backed by Mari long-term memory (memories / preferences / conversation history)</li>
+                            <li>Embedded a 2,074-line web Control Tower (Live + Backtest tabs, agent panels, NAV charts, chat) calling 17 live endpoints; shipped a WPF (.NET) launcher with BackendManager managing the Python lifecycle, a Streamlit research dashboard, and a VRAM-split PowerShell launcher (secretary 0.55 / trading 0.45)</li>
+                            <li>News pipeline: RSS (US/CN), GDELT historical fetch, news quality eval, and a 3B news adapter ("noise-killer") integrated into the strategy as an inject-only signal layer</li>
                         </ul>
                         <div class="timeline-tags">
                             <span class="tag">Python</span>
-                            <span class="tag">Qwen2.5/Qwen3</span>
+                            <span class="tag">Qwen2.5-7B</span>
+                            <span class="tag">Qwen2.5-VL</span>
                             <span class="tag">LoRA/QLoRA</span>
-                            <span class="tag">RAG</span>
                             <span class="tag">DPO/TRL</span>
+                            <span class="tag">Online RL</span>
+                            <span class="tag">RAG</span>
                             <span class="tag">FastAPI</span>
-                            <span class="tag">PySide6</span>
+                            <span class="tag">WPF / .NET</span>
+                            <span class="tag">PySide6 + QtWebEngine</span>
                             <span class="tag">Streamlit</span>
                             <span class="tag">MoE</span>
-                            <span class="tag">VLM</span>
                             <span class="tag">Live2D</span>
                         </div>
                     </div>
@@ -277,21 +278,33 @@
                         <h3 class="project-title">QuantAI</h3>
                         <p class="project-subtitle">智能量化投顾助手 | AI Quantitative Investment Assistant</p>
                         <p class="project-description">
-                            Production-grade multimodal AI investment system with 24+ phases. Single 7B base model with Adapter-MoE 
-                            routing (Scalper, Analyst+DPO, News, System2 Debate LoRA adapters) plus external VLM Chartist, broker-grade 
-                            Paper Trading (long/short, margin, liquidation), desktop assistant "Mari" (PySide6 + Live2D) with RLHF 
-                            feedback, Ouroboros night evolution (auto SFT/DPO/Alpha-DPO), and walk-forward evaluation framework.
+                            Production-scale multimodal AI trading terminal. Event-driven multi-agent strategy
+                            (3,453-line core) on a Qwen2.5-7B base: rule/SFT Planner + RL-Q Gatekeeper + MoE Router
+                            → {Scalper LoRA, Analyst DPO LoRA}, with a Qwen2.5-VL-3B Chartist overlay, System 2
+                            Critic/Judge debate, Macro Governor, and a 40bps passive-execution simulator. Full LLM
+                            training pipeline (71 scripts): SFT + QLoRA, CoT distillation from DeepSeek, DPO / Alpha
+                            Joint Evolution, surgical-DPO, Chartist VLM SFT, walk-forward eval — 25+ adapter checkpoints
+                            trained. Complete Online RL framework (ExperienceBuffer, RewardShaper, PreferenceLogger)
+                            for live Q-network updates + "Ouroboros" night-evolution. 6,480-line FastAPI backend with
+                            <b>48 REST endpoints</b>, broker-grade Paper Trading, MarketRAG, RegimeDetector, RiskGate.
+                            4-surface frontend: <b>PySide6 + QtWebEngine desktop shell</b> with QWebChannel-bridged
+                            Live2D characters (Mari/Changli/Arcueid) and a chat-first dialog with Mari (text chat
+                            + long-term memory: memories, preferences, conversation history), an embedded
+                            2,074-line web Control Tower (Live + Backtest tabs), a <b>WPF (.NET) launcher</b> with
+                            BackendManager, and a Streamlit research dashboard.
                         </p>
                         <div class="project-tech">
                             <span>Python</span>
-                            <span>Qwen2.5/Qwen3</span>
-                            <span>Multi-Agent MoE</span>
+                            <span>Qwen2.5-7B</span>
+                            <span>Qwen2.5-VL</span>
                             <span>LoRA/QLoRA</span>
                             <span>DPO/TRL</span>
+                            <span>Online RL</span>
                             <span>RAG</span>
                             <span>FastAPI</span>
+                            <span>WPF / .NET</span>
                             <span>PySide6</span>
-                            <span>VLM</span>
+                            <span>Streamlit</span>
                             <span>Live2D</span>
                         </div>
                         <div class="project-links">
@@ -319,19 +332,28 @@
                         <h3 class="project-title">AI Game Secretary</h3>
                         <p class="project-subtitle">Vision-based Game Automation + Real-time Battle Tracking</p>
                         <p class="project-description">
-                            Full-auto daily assistant for Blue Archive with 8-skill closed-loop automation and real-time 
-                            battle target locking. YOLOv8n + ByteTrack dual-stage tracking at 240Hz (DXcam), custom trained 
-                            models (mAP50 0.995), Florence-2 VQA for avatar matching, RapidOCR (CN/EN/JP), and Win32 
-                            transparent overlay at 250Hz. Includes web dashboard and trajectory recording system.
+                            Vision-based game-automation agent: <b>13 modular skills</b> (Cafe, Schedule, Arena, Bounty,
+                            EventActivity, StoryMining, Shop, Craft, MomoTalk, Club, Mail, DailyTasks, PassReward),
+                            each a self-contained multi-phase FSM sharing a unified ScreenState + ActionGate +
+                            BaseSkill framework with persistent JSON state stores. Vision pipeline: DXcam zero-copy
+                            capture (&gt;240Hz @ 4K), context-switched YOLOv8 detectors with TensorRT half-precision
+                            (mAP50 0.995), OpenCV multi-scale template matching + HSV histogram avatar matcher,
+                            custom-trained RapidOCR ONNX model (<code>ba_rec</code>) for game-specific text, and
+                            Florence-2 fallback for open-vocabulary UI detection. FastAPI control plane with live
+                            web dashboard, per-tick trajectory recording, and a WPF (.NET) Windows app with
+                            transparent overlay, Win32 hooks, and MuMu emulator integration.
                         </p>
                         <div class="project-tech">
                             <span>Python</span>
                             <span>YOLOv8</span>
-                            <span>ByteTrack</span>
+                            <span>TensorRT</span>
+                            <span>OpenCV</span>
+                            <span>RapidOCR (ONNX)</span>
                             <span>Florence-2</span>
                             <span>DXcam</span>
-                            <span>RapidOCR</span>
                             <span>FastAPI</span>
+                            <span>WPF / .NET</span>
+                            <span>Win32</span>
                         </div>
                         <div class="project-links">
                             <a href="https://github.com/C0k11/ai-game-secretary" target="_blank" class="project-link">
@@ -358,17 +380,26 @@
                         <h3 class="project-title">KingstonAccess</h3>
                         <p class="project-subtitle">AI Collective Kingston Hackathon · Mayor's Government Track · Nominated</p>
                         <p class="project-description">
-                            Accessible parking locator for Kingston residents with disabilities. Features interactive Google Maps 
-                            with real-time City Open Data (GeoJSON/Shapefile), AI-powered occupancy prediction, route navigation, 
-                            and full AODA/MFIPPA compliance including screen reader support, keyboard navigation, and high contrast mode.
+                            Accessible parking locator for Kingston residents with disabilities. <b>1,882-line React 18 +
+                            TypeScript SPA</b> (Vite) ingesting City of Kingston Open Data across <b>five GIS formats</b>
+                            (CSV, GeoJSON, KML, Shapefile with CPG/DBF/SHP/SHX/PRJ). Renders MultiPolygon parking-lot
+                            footprints on Google Maps (PolygonF + MarkerF + InfoWindowF) with on-demand geocode caching;
+                            heuristic availability predictor (zone × hour × weekday/weekend rules), DirectionsRenderer
+                            routing with travel-mode switcher (DRIVING / TRANSIT / WALKING) and accessible-spot waypoint
+                            routing, and Place autocomplete with abort-controlled debounced search. Backed by a
+                            <b>350-line Node.js HTTP proxy</b> exposing /api/nearest, /api/predict, and /api/ai/{thread,
+                            message} that integrates Backboard.io with <b>Gemini 2.5 Flash</b> for a persistent threaded
+                            AI assistant grounded in live parking data.
                         </p>
                         <div class="project-tech">
-                            <span>React</span>
+                            <span>React 18</span>
                             <span>TypeScript</span>
+                            <span>Vite</span>
                             <span>Google Maps API</span>
                             <span>Node.js</span>
-                            <span>Vite</span>
-                            <span>GeoJSON</span>
+                            <span>Gemini 2.5 Flash</span>
+                            <span>Backboard.io</span>
+                            <span>Shapefile / GeoJSON / KML</span>
                         </div>
                         <div class="project-links">
                             <a href="https://github.com/joker4002/Accessible_Parking_locator" target="_blank" class="project-link">
@@ -395,16 +426,20 @@
                         <h3 class="project-title">SmartRoom-AI</h3>
                         <p class="project-subtitle">AI Interior Design Assistant</p>
                         <p class="project-description">
-                            Cross-platform AI interior design app with web + React Native mobile (AR preview). Claude AI 
-                            room analysis, FLUX/DALL-E image generation, Three.js 3D visualization, multi-region shopping 
-                            cart (Amazon/IKEA/Taobao), design history cloud sync, and social sharing.
+                            Cross-platform AI interior design app with web + React Native (AR preview) clients.
+                            Async ML pipeline (FastAPI + Celery + S3) for vision analysis, semantic segmentation,
+                            FLUX / DALL-E / Stable Diffusion generation, and furniture matching. SQLAlchemy domain
+                            models for projects/designs/users; Three.js 3D visualization; Claude AI for room analysis.
                         </p>
                         <div class="project-tech">
                             <span>Next.js</span>
                             <span>FastAPI</span>
+                            <span>Celery</span>
+                            <span>SQLAlchemy</span>
                             <span>React Native</span>
                             <span>Three.js</span>
                             <span>FLUX</span>
+                            <span>Stable Diffusion</span>
                             <span>Claude AI</span>
                         </div>
                         <div class="project-links">
@@ -432,17 +467,20 @@
                         <h3 class="project-title">AI Coding Teacher</h3>
                         <p class="project-subtitle">Coding Platform & Interview Simulator</p>
                         <p class="project-description">
-                            Coding education platform with 49 curated algorithm problems (6 languages), real-time 1v1 
-                            code battles with ELO matchmaking, and AI mock interviews. AST-based code analysis with 
-                            complexity metrics, Winnowing plagiarism detection, React Flow Knowledge Graph, and bilingual UI.
+                            Full-stack edtech platform with real-time 1v1 ELO-matched code battles via WebSocket,
+                            AI mock-interview service (Claude/OpenAI), and a secure Docker + Piston code-execution
+                            sandbox. AST-based code analysis, Winnowing plagiarism detection, recommendation engine,
+                            and a React Flow Knowledge Graph for student mastery tracking. Bilingual UI.
                         </p>
                         <div class="project-tech">
                             <span>Next.js</span>
                             <span>FastAPI</span>
                             <span>Docker</span>
-                            <span>Socket.IO</span>
+                            <span>WebSocket</span>
+                            <span>Piston</span>
                             <span>React Flow</span>
                             <span>Monaco</span>
+                            <span>Claude / OpenAI</span>
                         </div>
                         <div class="project-links">
                             <a href="https://github.com/C0k11/AI-coding-teacher" target="_blank" class="project-link">
@@ -451,6 +489,64 @@
                                 </svg>
                                 <span>View Code</span>
                             </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- GAME1 - Unity 6 NieR-style 2.5D -->
+                <article class="project-card featured">
+                    <div class="project-image">
+                        <div class="project-placeholder" style="background: linear-gradient(135deg, #1f2937 0%, #4f46e5 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.6rem; font-weight: 700;">
+                            GAME1
+                        </div>
+                        <div class="project-overlay">
+                            <span class="project-type">Unity 6 · 2.5D Action</span>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">GAME1 (In Development)</h3>
+                        <p class="project-subtitle">NieR-style 2.5D Action-Adventure · Unity 6 URP</p>
+                        <p class="project-description">
+                            Indie 2.5D action-adventure on Unity 6 + URP (perspective camera over 2D sprites).
+                            <b>Custom engine framework (~70 scripts):</b> Order-scheduled Actor + Module pipeline
+                            with per-Actor <code>LocalTimeScale</code> (time-stop / slow-mo), generic
+                            <code>StateMachine&lt;T&gt;</code> with fluent builder, generic
+                            <code>ObjectPool&lt;T&gt;</code> (handles Unity fake-null), and an EventBus with typed
+                            facades (UI / Audio / Save / LevelLoad) decoupling gameplay from systems.<br><br>
+                            <b>Combat:</b> 3-step combo (windup→active→recovery) with input buffering, per-swing
+                            Hurtbox dedup, central HitboxQuery + Faction filtering, per-step HitStop pulse +
+                            Cinemachine Impulse camera shake.<br>
+                            <b>Platformer feel (AAA-grade):</b> coyote time, jump buffer, three-segment variable
+                            gravity, jump cut, dash input buffer + cooldown.<br>
+                            <b>AI:</b> EnemyBrain FSM (Patrol / Chase / Attack / Stunned / Dead), EnemySenses,
+                            EnvironmentProbe (cliff / wall checks), NPC wandering, interactable system, dialogue
+                            + narrative runtime, scene transitions (LevelLoader / Portal / SpawnPoint).<br>
+                            <b>4th-wall save:</b> 6-slot saves with a MetaSaveData layer tracking slot-wipe
+                            history, glitch flags, NG+ loop counter, and endings reached — enabling
+                            "the system remembers" narrative tricks.<br>
+                            <b>Polish:</b> DynamicShadow, Squash&amp;Stretch, YSortModule, AudioManager (cues +
+                            music tracks + filter presets), dual-perspective view (side ↔ top-down) with
+                            State-Driven Cinemachine 3 + Confiner2D + Impulse, and two Editor wizards
+                            (CameraSetupWizard, ParallaxBackdropWizard auto-importing sprites + perspective-FOV
+                            scaling).
+                        </p>
+                        <div class="project-tech">
+                            <span>C#</span>
+                            <span>Unity 6</span>
+                            <span>URP</span>
+                            <span>Cinemachine 3</span>
+                            <span>Shader Graph</span>
+                            <span>Input System</span>
+                            <span>Editor Tooling</span>
+                        </div>
+                        <div class="project-links">
+                            <span class="project-link" style="opacity:0.7;">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M12 6v6l4 2"/>
+                                </svg>
+                                <span>Private — In Development</span>
+                            </span>
                         </div>
                     </div>
                 </article>
@@ -469,15 +565,25 @@
                         <h3 class="project-title">Castle Champions</h3>
                         <p class="project-subtitle">Real-time Networked Multi-Client System</p>
                         <p class="project-description">
-                            Multi-client distributed system using C# and Netcode with complex state synchronization. 
-                            Implemented Client-Side Prediction and Server Reconciliation for smooth high-latency gameplay. 
-                            Modular FSM for complex entity behaviors and automated logic handling.
+                            CISC 486 group project (3-person team, role: Developer + Artist) — a 3D tower-defense
+                            and action hybrid where players build defensive structures along the only path to the
+                            town while fighting waves of monsters. <b>LAN co-op via Unity NGO (Netcode for
+                            GameObjects)</b> with NetworkSessionManager (host/client lifecycle, player registry,
+                            GetClosestPlayer) syncing HP / position / level for players, monsters, structures, and
+                            town across all clients. Enemy AI built on <b>UnityHFSM</b> (Wander → ChasePlayer →
+                            AttackPlayer) with strategy-pattern behaviors (IEnemyBehavior + Attack/Chase/Wander
+                            concretes) and pluggable services (DistanceService, PathingService); <b>NavMesh +
+                            NavMeshAgent</b> pathfinding for obstacle / cliff avoidance. State-based player
+                            movement (idle / walk / run / crouch), networked transforms, and synced scripted
+                            events (Earthquake damage, Town Self-Upgrade, Tax Received).
                         </p>
                         <div class="project-tech">
                             <span>C#</span>
                             <span>Unity</span>
-                            <span>Netcode</span>
-                            <span>FSM</span>
+                            <span>NGO</span>
+                            <span>NavMesh</span>
+                            <span>UnityHFSM</span>
+                            <span>LAN Co-op</span>
                         </div>
                         <div class="project-links">
                             <a href="https://github.com/AheadAlot/CISC-486-Group-14-Project" target="_blank" class="project-link primary">
@@ -618,10 +724,14 @@
                     </div>
                     <h3>Game Development</h3>
                     <div class="skill-tags">
+                        <span class="skill-tag">Unity 6 (URP)</span>
                         <span class="skill-tag">Unity 3D</span>
+                        <span class="skill-tag">Cinemachine 3</span>
                         <span class="skill-tag">Netcode for GameObjects</span>
-                        <span class="skill-tag">Shader Graph</span>
-                        <span class="skill-tag">Animator</span>
+                        <span class="skill-tag">Shader Graph / HLSL</span>
+                        <span class="skill-tag">Input System</span>
+                        <span class="skill-tag">Unreal Engine 5</span>
+                        <span class="skill-tag">Blender</span>
                     </div>
                 </div>
 
