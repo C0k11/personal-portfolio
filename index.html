@@ -1,691 +1,214 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jerry (Shien) Zhang | Developer</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jerry Zhang — Data & ML</title>
+  <meta name="description" content="Jerry (Shien) Zhang — data analyst & engineer. Data warehouses, predictive models, and the automation around them.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="nav">
-        <div class="nav-logo">Cok11</div>
-        <div class="nav-links">
-            <a href="#about">About</a>
-            <a href="#experience">Experience</a>
-            <a href="#projects">Projects</a>
-            <a href="#skills">Skills</a>
-            <a href="#contact">Contact</a>
-        </div>
-        <div class="nav-toggle">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
+
+  <canvas id="dusk" aria-hidden="true"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="nav">
+    <a class="nav-name mono" href="#top">JZ</a>
+    <nav class="nav-links mono">
+      <a href="#work">Work</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
     </nav>
+  </header>
 
-    <!-- Mobile Menu -->
-    <div class="mobile-menu">
-        <a href="#about">About</a>
-        <a href="#experience">Experience</a>
-        <a href="#projects">Projects</a>
-        <a href="#skills">Skills</a>
-        <a href="#contact">Contact</a>
-    </div>
+  <main id="top">
 
-    <!-- Hero Section -->
-    <section class="hero" id="hero">
-        <div class="hero-bg"></div>
-        <div class="hero-content">
-            <div class="hero-intro">
-                <span class="hero-greeting">Hello, I'm</span>
-                <h1 class="hero-name">
-                    <span class="name-first">Jerry (Shien)</span>
-                    <span class="name-last">Zhang</span>
-                </h1>
-                <div class="hero-title-wrapper">
-                    <div class="hero-title">
-                        <span class="title-text">Developer</span>
-                    </div>
-                </div>
-                <p class="hero-description">
-                    AI Engineer and Computing student at Queen's University specializing in local LLM training, 
-                    full-stack development, and game architecture.
-                </p>
-                <div class="hero-cta">
-                    <a href="#projects" class="btn btn-primary">
-                        <span>View Projects</span>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M5 12h14M12 5l7 7-7 7"/>
-                        </svg>
-                    </a>
-                    <a href="#contact" class="btn btn-secondary">Get In Touch</a>
-                </div>
-            </div>
-        </div>
-        <div class="scroll-indicator">
-            <span>Scroll to explore</span>
-            <div class="scroll-arrow">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 5v14M5 12l7 7 7-7"/>
-                </svg>
-            </div>
-        </div>
+    <!-- ================= HERO ================= -->
+    <section class="hero">
+      <p class="eyebrow mono">TORONTO · DATA &amp; MACHINE LEARNING</p>
+      <h1>Jerry Zhang</h1>
+      <p class="hero-line">I turn messy data into pipelines, models, and decisions.</p>
+      <p class="hero-sub">Bachelor of Computing (Honours) at Queen's University, class of 2026.
+        I like owning the whole path — ingest, warehouse, model, dashboard — and proving
+        each step with tests and real numbers.</p>
+      <div class="hero-actions mono">
+        <a href="https://github.com/C0k11" target="_blank" rel="noopener">GitHub ↗</a>
+        <a href="https://www.linkedin.com/in/jerry-zhang-575628300" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a href="mailto:shienzhang542@gmail.com">Email</a>
+      </div>
+      <p class="hero-hint mono" aria-hidden="true">scroll — the water ripples where you point</p>
     </section>
 
-    <!-- About Section -->
-    <section class="section about" id="about">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-number">01</span>
-                <h2 class="section-title">About Me</h2>
-                <div class="section-line"></div>
-            </div>
-            <div class="about-content">
-                <div class="about-text">
-                    <p class="about-intro">
-                        I'm a <span class="highlight">Computing Honours</span> student at Queen's University, 
-                        graduating in April 2026. I specialize in 
-                        <span class="highlight">full-stack development</span>, <span class="highlight">AI engineering</span>, 
-                        and <span class="highlight">game architecture</span>.
-                    </p>
-                    <p>
-                        As an <span class="highlight">AI Engineer</span>, I have extensive experience training and fine-tuning 
-                        local LLM models (Qwen2.5, LoRA/QLoRA) for production applications. I build cross-platform applications 
-                        with Next.js and FastAPI, real-time networked systems with Unity and Netcode, and AI-powered features 
-                        using Claude and FLUX models.
-                    </p>
-                    <div class="about-details">
-                        <div class="detail-item">
-                            <span class="detail-label">Location</span>
-                            <span class="detail-value">Toronto, Ontario</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="detail-label">Education</span>
-                            <span class="detail-value">Queen's University</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="detail-label">Degree</span>
-                            <span class="detail-value">Bachelor of Computing (Honours)</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="detail-label">Graduation</span>
-                            <span class="detail-value">April 2026</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="about-stats">
-                    <div class="stat-card">
-                        <span class="stat-number">6+</span>
-                        <span class="stat-label">Programming Languages</span>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-number">2+</span>
-                        <span class="stat-label">Years of Experience</span>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-number">8+</span>
-                        <span class="stat-label">Major Projects</span>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-number">2</span>
-                        <span class="stat-label">Languages Spoken</span>
-                    </div>
-                </div>
-            </div>
+    <!-- ================= EXPERIENCE ================= -->
+    <section class="section" id="work">
+      <div class="section-head">
+        <span class="mono sec-label">01 — WORK</span>
+        <h2>Experience</h2>
+      </div>
+
+      <article class="panel job">
+        <div class="job-head">
+          <h3>Data Analyst Intern · Invision</h3>
+          <span class="mono job-when">May – Aug 2025 · Toronto</span>
         </div>
+        <ul>
+          <li>Extracted structured data from 10-K/10-Q filings with Python, mapping unstructured
+              text to standardized fields for downstream signal generation.</li>
+          <li>Owned end-to-end validation of catalog signals — SQL queries and Python unit tests
+              checking outputs against raw filings before analyst delivery.</li>
+          <li>Built dbt/SQL data-quality rules across filing, pricing, and entity data, and Tableau
+              dashboards over the validated warehouse.</li>
+        </ul>
+      </article>
+
+      <article class="panel job">
+        <div class="job-head">
+          <h3>Web Developer Intern · Guizhou Haihong Food Co.</h3>
+          <span class="mono job-when">May – Aug 2024 · Remote</span>
+        </div>
+        <ul>
+          <li>Sole developer of the corporate site — HTML5, CSS3, Three.js, with an interactive
+              visualization of export logistics and a mobile-first responsive layout.</li>
+        </ul>
+      </article>
     </section>
 
-    <!-- Experience Section -->
-    <section class="section experience" id="experience">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-number">02</span>
-                <h2 class="section-title">Experience</h2>
-                <div class="section-line"></div>
-            </div>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-header">
-                            <h3 class="timeline-title">QuantAI - AI Quantitative Investment Assistant</h3>
-                            <span class="timeline-date">Dec 2025 – Present</span>
-                        </div>
-                        <h4 class="timeline-company">Personal Project</h4>
-                        <p class="timeline-location">Kingston, Ontario</p>
-                        <ul class="timeline-details">
-                            <li>Designed an event-driven multi-agent strategy (3,453-line MultiAgentStrategy) on a single Qwen2.5-7B base: rule/SFT Planner + RL-Q Gatekeeper + MoE Router → {Scalper LoRA, Analyst DPO LoRA}, with a Qwen2.5-VL-3B Chartist overlay, System 2 Critic/Judge debate, Macro Governor, and a 40bps passive-execution simulator</li>
-                            <li>Built the full LLM training pipeline (71 scripts): SFT + QLoRA, CoT distillation from DeepSeek, DPO / Alpha Joint Evolution (multi-expert concurrent), surgical-DPO, Chartist VLM SFT, and walk-forward eval — trained 25+ adapter checkpoints (v1–v4, alpha-from-PnL, Ouroboros, triple-train, news-noise-killer)</li>
-                            <li>Implemented a complete Online RL framework (ExperienceBuffer, RewardShaper, PreferenceLogger, OnlineLearningManager) for live Q-network updates, plus an "Ouroboros" night-evolution pipeline that auto-builds nightly SFT/DPO datasets from daytime trajectories with hot-reload adapter switching</li>
-                            <li>Shipped a 6,480-line FastAPI backend with <b>48 REST endpoints</b> covering live trading, backtest runs, evolution train/start/status/stop, RL start/stop, news submission, agent audit, chat, feedback, and LLM warmup/unload</li>
-                            <li>Built a broker-grade Paper Trading engine (long/short, margin, settlement, borrow fees, automated liquidation, full audit trails), MarketRAG retrieval, RegimeDetector, RiskGate with drawdown/volatility alerts, and a Narrator pipeline for LLM-generated trade explanations</li>
-                            <li>Delivered a 4-surface frontend: PySide6 + QtWebEngine desktop shell with QWebChannel-bridged Live2D characters (Mari / Changli / Arcueid) and a chat-first text dialog with Mari, backed by Mari long-term memory (memories / preferences / conversation history)</li>
-                            <li>Embedded a 2,074-line web Control Tower (Live + Backtest tabs, agent panels, NAV charts, chat) calling 17 live endpoints; shipped a WPF (.NET) launcher with BackendManager managing the Python lifecycle, a Streamlit research dashboard, and a VRAM-split PowerShell launcher (secretary 0.55 / trading 0.45)</li>
-                            <li>News pipeline: RSS (US/CN), GDELT historical fetch, news quality eval, and a 3B news adapter ("noise-killer") integrated into the strategy as an inject-only signal layer</li>
-                        </ul>
-                        <div class="timeline-tags">
-                            <span class="tag">Python</span>
-                            <span class="tag">Qwen2.5-7B</span>
-                            <span class="tag">Qwen2.5-VL</span>
-                            <span class="tag">LoRA/QLoRA</span>
-                            <span class="tag">DPO/TRL</span>
-                            <span class="tag">Online RL</span>
-                            <span class="tag">RAG</span>
-                            <span class="tag">FastAPI</span>
-                            <span class="tag">WPF / .NET</span>
-                            <span class="tag">PySide6 + QtWebEngine</span>
-                            <span class="tag">Streamlit</span>
-                            <span class="tag">MoE</span>
-                            <span class="tag">Live2D</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-header">
-                            <h3 class="timeline-title">AI Collective Kingston Hackathon</h3>
-                            <span class="timeline-date">Jan 2026</span>
-                        </div>
-                        <h4 class="timeline-company">City of Kingston – Mayor's Municipal Government Track</h4>
-                        <p class="timeline-location">Kingston, Ontario</p>
-                        <ul class="timeline-details">
-                            <li>Built "KingstonAccess" — an accessible parking locator web app for residents with disabilities, addressing real municipal accessibility challenges</li>
-                            <li>Developed interactive Google Maps interface with real-time parking lot data sourced from City of Kingston Open Data (GeoJSON/Shapefile)</li>
-                            <li>Implemented AI-powered occupancy prediction, route navigation, and AODA-compliant accessibility features (screen reader, keyboard navigation, high contrast)</li>
-                            <li>Achieved nomination/shortlist in the Mayor's Municipal Government Track</li>
-                        </ul>
-                        <div class="timeline-tags">
-                            <span class="tag">React</span>
-                            <span class="tag">TypeScript</span>
-                            <span class="tag">Google Maps API</span>
-                            <span class="tag">Vite</span>
-                            <span class="tag">Node.js</span>
-                            <span class="tag">GeoJSON</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-header">
-                            <h3 class="timeline-title">Web Developer</h3>
-                            <span class="timeline-date">May 2024 – Aug 2024</span>
-                        </div>
-                        <h4 class="timeline-company">Guizhou Haihong Food Co., Ltd.</h4>
-                        <p class="timeline-location">Guizhou, China</p>
-                        <ul class="timeline-details">
-                            <li>Designed and deployed the company's official responsive website using HTML5, CSS3, and Three.js</li>
-                            <li>Built interactive 3D globe visualization to showcase global export logistics</li>
-                            <li>Implemented Mobile-First responsive design, ensuring seamless UX across all devices</li>
-                        </ul>
-                        <div class="timeline-tags">
-                            <span class="tag">HTML5</span>
-                            <span class="tag">CSS3</span>
-                            <span class="tag">Three.js</span>
-                            <span class="tag">Responsive Design</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-header">
-                            <h3 class="timeline-title">Bachelor of Computing (Honours)</h3>
-                            <span class="timeline-date">Sep 2022 – Apr 2026</span>
-                        </div>
-                        <h4 class="timeline-company">Queen's University</h4>
-                        <p class="timeline-location">Kingston, Ontario</p>
-                        <ul class="timeline-details">
-                            <li>Relevant Coursework: Web Development, Data Analytics, Operating Systems, Database Management, Game Architecture</li>
-                        </ul>
-                        <div class="timeline-tags">
-                            <span class="tag">Web Development</span>
-                            <span class="tag">Data Analytics</span>
-                            <span class="tag">Game Architecture</span>
-                            <span class="tag">Database Management</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- ================= PROJECTS ================= -->
+    <section class="section" id="projects">
+      <div class="section-head">
+        <span class="mono sec-label">02 — SELECTED PROJECTS</span>
+        <h2>Projects</h2>
+      </div>
+
+      <article class="panel project">
+        <div class="project-head">
+          <h3><a href="https://github.com/C0k11/stock-share-Helper" target="_blank" rel="noopener">QuantAI</a></h3>
+          <span class="mono proj-when">Nov 2025 —</span>
         </div>
+        <p class="project-tag">Quantitative portfolio-analysis platform</p>
+        <p>Tracks a real brokerage portfolio by turning daily market data and news into a SQL
+           warehouse, dashboards, and automated analyst reports.</p>
+        <ul>
+          <li>Idempotent ELT into a DuckDB star schema — 2 dimensions, 8 fact tables,
+              reconciliation tests agreeing to within 1e-6.</li>
+          <li>Found and fixed a look-ahead bias that had overstated backtest returns ~3.5×.</li>
+          <li>Fine-tuned a local Qwen3-8B with QLoRA to draft the daily market reports,
+              gated by blind evaluation.</li>
+        </ul>
+        <div class="chips mono">
+          <span>34 tickers</span><span>80 dbt checks</span><span>26 indicators</span>
+        </div>
+      </article>
+
+      <article class="panel project">
+        <div class="project-head">
+          <h3><a href="https://github.com/C0k11/credit-default-prediction" target="_blank" rel="noopener">Credit Default Prediction</a></h3>
+          <span class="mono proj-when">Jul 2026</span>
+        </div>
+        <p class="project-tag">Machine learning on loan data</p>
+        <p>Predicts which loan applicants will default — validated externally on the Kaggle
+           leaderboard rather than on my own split.</p>
+        <ul>
+          <li>Aggregated 58M rows of credit history across 6 related tables into 75
+              applicant-level behavioral features.</li>
+          <li>Controlled experiments (same folds, one change at a time) lifted AUC
+              from 0.759 to 0.789.</li>
+          <li>SHAP explanations for every score; the riskiest 20% of applicants capture
+              57% of all defaults.</li>
+        </ul>
+        <div class="chips mono">
+          <span>AUC 0.785 · Kaggle</span><span>58M rows</span><span>75 features</span>
+        </div>
+      </article>
+
+      <article class="panel project">
+        <div class="project-head">
+          <h3><a href="https://github.com/C0k11/sql-data-warehouse" target="_blank" rel="noopener">SQL Data Warehouse</a></h3>
+          <span class="mono proj-when">Jul 2026</span>
+        </div>
+        <p class="project-tag">End-to-end analytics pipeline on SQL Server</p>
+        <p>Raw customer, product, and sales files → clean, analysis-ready star schema,
+           with quality gates that block bad data from ever reaching a report.</p>
+        <ul>
+          <li>Bronze / silver / gold layers with per-run audit logging and row-count
+              reconciliation against source files.</li>
+          <li>40 automated quality checks; caught three silent corruption bugs
+              (encoding, line endings, dropped rows).</li>
+          <li>CI in GitHub Actions: a Linux SQL Server container rebuilds and re-verifies
+              the entire warehouse on every push.</li>
+        </ul>
+        <div class="chips mono">
+          <span>40 checks</span><span>116K rows</span><span>CI on every push</span>
+        </div>
+      </article>
+
+      <div class="more-projects panel">
+        <span class="mono sec-label">ALSO BUILT</span>
+        <ul class="more-list">
+          <li><a href="https://github.com/C0k11/ai-game-secretary" target="_blank" rel="noopener">AI Game Secretary</a>
+              <span class="mono">— 474-class vision pipeline, 98.2% mAP50, 46K-image dataset built from scratch</span></li>
+          <li><a href="https://github.com/C0k11/Conference-Database" target="_blank" rel="noopener">Conference Database</a>
+              <span class="mono">— 13-table MySQL design + validated analytics query pack</span></li>
+          <li><a href="https://github.com/AheadAlot/CISC-486-Group-14-Project" target="_blank" rel="noopener">Castle Champions</a>
+              <span class="mono">— multiplayer Unity game, CISC 486 team project</span></li>
+        </ul>
+      </div>
     </section>
 
-    <!-- Projects Section -->
-    <section class="section projects" id="projects">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-number">03</span>
-                <h2 class="section-title">Projects</h2>
-                <div class="section-line"></div>
-            </div>
-            <div class="projects-grid">
-                <!-- QuantAI - Featured -->
-                <article class="project-card featured">
-                    <div class="project-image">
-                        <div class="project-placeholder" style="background: linear-gradient(135deg, #00d4ff 0%, #0066ff 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem; font-weight: 700;">
-                            QuantAI
-                        </div>
-                        <div class="project-overlay">
-                            <span class="project-type">AI Quant Platform</span>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">QuantAI</h3>
-                        <p class="project-subtitle">智能量化投顾助手 | AI Quantitative Investment Assistant</p>
-                        <p class="project-description">
-                            Production-scale multimodal AI trading terminal. Event-driven multi-agent strategy
-                            (3,453-line core) on a Qwen2.5-7B base: rule/SFT Planner + RL-Q Gatekeeper + MoE Router
-                            → {Scalper LoRA, Analyst DPO LoRA}, with a Qwen2.5-VL-3B Chartist overlay, System 2
-                            Critic/Judge debate, Macro Governor, and a 40bps passive-execution simulator. Full LLM
-                            training pipeline (71 scripts): SFT + QLoRA, CoT distillation from DeepSeek, DPO / Alpha
-                            Joint Evolution, surgical-DPO, Chartist VLM SFT, walk-forward eval — 25+ adapter checkpoints
-                            trained. Complete Online RL framework (ExperienceBuffer, RewardShaper, PreferenceLogger)
-                            for live Q-network updates + "Ouroboros" night-evolution. 6,480-line FastAPI backend with
-                            <b>48 REST endpoints</b>, broker-grade Paper Trading, MarketRAG, RegimeDetector, RiskGate.
-                            4-surface frontend: <b>PySide6 + QtWebEngine desktop shell</b> with QWebChannel-bridged
-                            Live2D characters (Mari/Changli/Arcueid) and a chat-first dialog with Mari (text chat
-                            + long-term memory: memories, preferences, conversation history), an embedded
-                            2,074-line web Control Tower (Live + Backtest tabs), a <b>WPF (.NET) launcher</b> with
-                            BackendManager, and a Streamlit research dashboard.
-                        </p>
-                        <div class="project-tech">
-                            <span>Python</span>
-                            <span>Qwen2.5-7B</span>
-                            <span>Qwen2.5-VL</span>
-                            <span>LoRA/QLoRA</span>
-                            <span>DPO/TRL</span>
-                            <span>Online RL</span>
-                            <span>RAG</span>
-                            <span>FastAPI</span>
-                            <span>WPF / .NET</span>
-                            <span>PySide6</span>
-                            <span>Streamlit</span>
-                            <span>Live2D</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://github.com/C0k11/stock-share-Helper" target="_blank" class="project-link">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
-                                </svg>
-                                <span>View Code</span>
-                            </a>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- AI Game Secretary - Featured -->
-                <article class="project-card featured">
-                    <div class="project-image">
-                        <div class="project-placeholder" style="background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.4rem; font-weight: 700;">
-                            AI Game Secretary
-                        </div>
-                        <div class="project-overlay">
-                            <span class="project-type">Desktop AI App</span>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">AI Game Secretary</h3>
-                        <p class="project-subtitle">Vision-based Game Automation + Real-time Battle Tracking</p>
-                        <p class="project-description">
-                            Vision-based game-automation agent: <b>13 modular skills</b> (Cafe, Schedule, Arena, Bounty,
-                            EventActivity, StoryMining, Shop, Craft, MomoTalk, Club, Mail, DailyTasks, PassReward),
-                            each a self-contained multi-phase FSM sharing a unified ScreenState + ActionGate +
-                            BaseSkill framework with persistent JSON state stores. Vision pipeline: DXcam zero-copy
-                            capture (&gt;240Hz @ 4K), context-switched YOLOv8 detectors with TensorRT half-precision
-                            (mAP50 0.995), OpenCV multi-scale template matching + HSV histogram avatar matcher,
-                            custom-trained RapidOCR ONNX model (<code>ba_rec</code>) for game-specific text, and
-                            Florence-2 fallback for open-vocabulary UI detection. FastAPI control plane with live
-                            web dashboard, per-tick trajectory recording, and a WPF (.NET) Windows app with
-                            transparent overlay, Win32 hooks, and MuMu emulator integration.
-                        </p>
-                        <div class="project-tech">
-                            <span>Python</span>
-                            <span>YOLOv8</span>
-                            <span>TensorRT</span>
-                            <span>OpenCV</span>
-                            <span>RapidOCR (ONNX)</span>
-                            <span>Florence-2</span>
-                            <span>DXcam</span>
-                            <span>FastAPI</span>
-                            <span>WPF / .NET</span>
-                            <span>Win32</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://github.com/C0k11/ai-game-secretary" target="_blank" class="project-link">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
-                                </svg>
-                                <span>View Code</span>
-                            </a>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Castle Champions -->
-                <article class="project-card featured">
-                    <div class="project-image">
-                        <div class="project-placeholder" style="background: linear-gradient(135deg, #ec4899 0%, #be185d 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.4rem; font-weight: 700;">
-                            Castle Champions
-                        </div>
-                        <div class="project-overlay">
-                            <span class="project-type">Unity 3D Game</span>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">Castle Champions</h3>
-                        <p class="project-subtitle">Real-time Networked Multi-Client System</p>
-                        <p class="project-description">
-                            CISC 486 group project (3-person team, role: Developer + Artist) — a 3D tower-defense
-                            and action hybrid where players build defensive structures along the only path to the
-                            town while fighting waves of monsters. <b>LAN co-op via Unity NGO (Netcode for
-                            GameObjects)</b> with NetworkSessionManager (host/client lifecycle, player registry,
-                            GetClosestPlayer) syncing HP / position / level for players, monsters, structures, and
-                            town across all clients. Enemy AI built on <b>UnityHFSM</b> (Wander → ChasePlayer →
-                            AttackPlayer) with strategy-pattern behaviors (IEnemyBehavior + Attack/Chase/Wander
-                            concretes) and pluggable services (DistanceService, PathingService); <b>NavMesh +
-                            NavMeshAgent</b> pathfinding for obstacle / cliff avoidance. State-based player
-                            movement (idle / walk / run / crouch), networked transforms, and synced scripted
-                            events (Earthquake damage, Town Self-Upgrade, Tax Received).
-                        </p>
-                        <div class="project-tech">
-                            <span>C#</span>
-                            <span>Unity</span>
-                            <span>NGO</span>
-                            <span>NavMesh</span>
-                            <span>UnityHFSM</span>
-                            <span>LAN Co-op</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://github.com/AheadAlot/CISC-486-Group-14-Project" target="_blank" class="project-link primary">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
-                                </svg>
-                                <span>View Code</span>
-                            </a>
-                        </div>
-                    </div>
-                </article>
-
-            </div>
+    <!-- ================= SKILLS ================= -->
+    <section class="section" id="skills">
+      <div class="section-head">
+        <span class="mono sec-label">03 — TOOLBOX</span>
+        <h2>Skills</h2>
+      </div>
+      <div class="panel skills-grid">
+        <div>
+          <h4 class="mono">LANGUAGES</h4>
+          <p>Python · SQL · R · C# · TypeScript</p>
         </div>
+        <div>
+          <h4 class="mono">DATA &amp; ML</h4>
+          <p>pandas · NumPy · scikit-learn · LightGBM · XGBoost · PyTorch · QLoRA · SHAP</p>
+        </div>
+        <div>
+          <h4 class="mono">DATA ENGINEERING</h4>
+          <p>ETL / ELT · dimensional modeling · SQL Server / T-SQL · DuckDB · dbt · Airflow</p>
+        </div>
+        <div>
+          <h4 class="mono">VIZ &amp; TOOLS</h4>
+          <p>Tableau · Streamlit · Plotly · FastAPI · Docker · Git · GitHub Actions</p>
+        </div>
+      </div>
     </section>
 
-    <!-- Skills Section -->
-    <section class="section skills" id="skills">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-number">04</span>
-                <h2 class="section-title">Skills</h2>
-                <div class="section-line"></div>
-            </div>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <div class="skill-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="16 18 22 12 16 6"/>
-                            <polyline points="8 6 2 12 8 18"/>
-                        </svg>
-                    </div>
-                    <h3>Programming Languages</h3>
-                    <div class="skill-items">
-                        <div class="skill-item">
-                            <span class="skill-name">C#</span>
-                            <div class="skill-bar"><div class="skill-progress" style="--progress: 90%"></div></div>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">Python</span>
-                            <div class="skill-bar"><div class="skill-progress" style="--progress: 85%"></div></div>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">TypeScript</span>
-                            <div class="skill-bar"><div class="skill-progress" style="--progress: 85%"></div></div>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">JavaScript</span>
-                            <div class="skill-bar"><div class="skill-progress" style="--progress: 85%"></div></div>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">Java</span>
-                            <div class="skill-bar"><div class="skill-progress" style="--progress: 80%"></div></div>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">R / SQL</span>
-                            <div class="skill-bar"><div class="skill-progress" style="--progress: 75%"></div></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="skill-category">
-                    <div class="skill-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
-                            <line x1="8" y1="21" x2="16" y2="21"/>
-                            <line x1="12" y1="17" x2="12" y2="21"/>
-                        </svg>
-                    </div>
-                    <h3>Web & AI</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Next.js 14</span>
-                        <span class="skill-tag">React</span>
-                        <span class="skill-tag">FastAPI</span>
-                        <span class="skill-tag">Node.js</span>
-                        <span class="skill-tag">Socket.IO</span>
-                        <span class="skill-tag">Docker</span>
-                        <span class="skill-tag">Three.js</span>
-                        <span class="skill-tag">Tailwind CSS</span>
-                        <span class="skill-tag">LLM Fine-tuning</span>
-                        <span class="skill-tag">LoRA/QLoRA</span>
-                        <span class="skill-tag">RAG</span>
-                        <span class="skill-tag">DPO/TRL</span>
-                        <span class="skill-tag">Streamlit</span>
-                        <span class="skill-tag">YOLOv8</span>
-                        <span class="skill-tag">Florence-2</span>
-                        <span class="skill-tag">ByteTrack</span>
-                    </div>
-                </div>
-
-                <div class="skill-category">
-                    <div class="skill-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polygon points="5 3 19 12 5 21 5 3"/>
-                        </svg>
-                    </div>
-                    <h3>Game Development</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Unity 6 (URP)</span>
-                        <span class="skill-tag">Unity 3D</span>
-                        <span class="skill-tag">Cinemachine 3</span>
-                        <span class="skill-tag">Netcode for GameObjects</span>
-                        <span class="skill-tag">Shader Graph / HLSL</span>
-                        <span class="skill-tag">Input System</span>
-                        <span class="skill-tag">Unreal Engine 5</span>
-                        <span class="skill-tag">Blender</span>
-                    </div>
-                </div>
-
-                <div class="skill-category">
-                    <div class="skill-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-                            <path d="M2 17l10 5 10-5"/>
-                            <path d="M2 12l10 5 10-5"/>
-                        </svg>
-                    </div>
-                    <h3>Tools & Platforms</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Git/GitHub</span>
-                        <span class="skill-tag">PySide6 / Qt</span>
-                        <span class="skill-tag">Live2D</span>
-                        <span class="skill-tag">Expo (Mobile)</span>
-                        <span class="skill-tag">PostgreSQL</span>
-                        <span class="skill-tag">Visual Studio</span>
-                        <span class="skill-tag">R Studio</span>
-                    </div>
-                </div>
-            </div>
+    <!-- ================= CONTACT ================= -->
+    <section class="section" id="contact">
+      <div class="section-head">
+        <span class="mono sec-label">04 — SAY HI</span>
+        <h2>Contact</h2>
+      </div>
+      <div class="panel contact-panel">
+        <p>Graduating April 2026 and looking for data analyst / data science / data engineering
+           roles. The fastest way to reach me:</p>
+        <div class="hero-actions mono">
+          <a href="mailto:shienzhang542@gmail.com">shienzhang542@gmail.com</a>
+          <a href="https://github.com/C0k11" target="_blank" rel="noopener">github.com/C0k11 ↗</a>
+          <a href="https://www.linkedin.com/in/jerry-zhang-575628300" target="_blank" rel="noopener">LinkedIn ↗</a>
         </div>
+      </div>
     </section>
 
-    <!-- Contact Section -->
-    <section class="section contact" id="contact">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-number">05</span>
-                <h2 class="section-title">Get In Touch</h2>
-                <div class="section-line"></div>
-            </div>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <p class="contact-intro">
-                        I'm currently looking for new opportunities and would love to hear from you. 
-                        Whether you have a question, a project idea, or just want to say hi, 
-                        feel free to reach out!
-                    </p>
-                    <div class="contact-details">
-                        <a href="mailto:shienzhang542@gmail.com" class="contact-item">
-                            <div class="contact-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                                    <polyline points="22,6 12,13 2,6"/>
-                                </svg>
-                            </div>
-                            <div class="contact-text">
-                                <span class="contact-label">Email</span>
-                                <span class="contact-value">shienzhang542@gmail.com</span>
-                            </div>
-                        </a>
-                        <a href="tel:+14168290214" class="contact-item">
-                            <div class="contact-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-                                </svg>
-                            </div>
-                            <div class="contact-text">
-                                <span class="contact-label">Phone</span>
-                                <span class="contact-value">+1 (416) 829-0214</span>
-                            </div>
-                        </a>
-                        <a href="https://github.com/C0k11" target="_blank" class="contact-item">
-                            <div class="contact-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
-                                </svg>
-                            </div>
-                            <div class="contact-text">
-                                <span class="contact-label">GitHub</span>
-                                <span class="contact-value">github.com/C0k11</span>
-                            </div>
-                        </a>
-                        <a href="https://www.linkedin.com/in/jerry-zhang-575628300" target="_blank" class="contact-item">
-                            <div class="contact-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                                </svg>
-                            </div>
-                            <div class="contact-text">
-                                <span class="contact-label">LinkedIn</span>
-                                <span class="contact-value">jerry-zhang-575628300</span>
-                            </div>
-                        </a>
-                        <a href="https://discord.com/users/cok11" target="_blank" class="contact-item">
-                            <div class="contact-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
-                                </svg>
-                            </div>
-                            <div class="contact-text">
-                                <span class="contact-label">Discord</span>
-                                <span class="contact-value">cok11</span>
-                            </div>
-                        </a>
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                                    <circle cx="12" cy="10" r="3"/>
-                                </svg>
-                            </div>
-                            <div class="contact-text">
-                                <span class="contact-label">Location</span>
-                                <span class="contact-value">Toronto, Ontario</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <form class="contact-form" id="contactForm">
-                    <!-- Web3Forms access key - 获取你的免费key: https://web3forms.com/ -->
-                    <input type="hidden" name="access_key" value="12a3e108-00a6-466a-a0ef-da5e5274cd08">
-                    <input type="hidden" name="subject" value="Portfolio Contact Form Submission">
-                    <input type="hidden" name="from_name" value="Portfolio Website">
-                    
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" placeholder="Your name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" placeholder="your@email.com" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" rows="5" placeholder="Your message..." required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-full" id="submitBtn">
-                        <span>Send Message</span>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <line x1="22" y1="2" x2="11" y2="13"/>
-                            <polygon points="22 2 15 22 11 13 2 9 22 2"/>
-                        </svg>
-                    </button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <span class="footer-logo">Cok11</span>
-                    <p>Designed & Built by Jerry Zhang</p>
-                </div>
-                <div class="footer-links">
-                    <a href="https://github.com/C0k11" target="_blank" aria-label="GitHub">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
-                        </svg>
-                    </a>
-                    <a href="https://www.linkedin.com/in/jerry-zhang-575628300" target="_blank" aria-label="LinkedIn">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                        </svg>
-                    </a>
-                    <a href="https://discord.com/users/cok11" target="_blank" aria-label="Discord">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
-                        </svg>
-                    </a>
-                    <a href="mailto:shienzhang542@gmail.com" aria-label="Email">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                            <polyline points="22,6 12,13 2,6"/>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 Jerry Zhang. All rights reserved.</p>
-            </div>
-        </div>
+    <footer class="mono">
+      <span>© 2026 Jerry Zhang</span>
+      <span>background is hand-coded canvas — no images, just math</span>
     </footer>
 
-    <script src="script.js"></script>
+  </main>
+
+  <script src="script.js"></script>
 </body>
 </html>
-
