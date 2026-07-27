@@ -148,19 +148,22 @@
           <h3><a href="https://github.com/C0k11/sql-data-warehouse" target="_blank" rel="noopener">SQL Data Warehouse</a></h3>
           <span class="mono proj-when">Jul 2026</span>
         </div>
-        <p class="project-tag">End-to-end analytics pipeline on SQL Server</p>
+        <p class="project-tag">One warehouse spec, two engines</p>
         <p>Raw customer, product, and sales files → clean, analysis-ready star schema,
-           with quality gates that block bad data from ever reaching a report.</p>
+           with quality gates that block bad data from ever reaching a report. Built
+           twice — T-SQL on SQL Server, and PySpark + Delta Lake on Databricks.</p>
         <ul>
           <li>Bronze / silver / gold layers with per-run audit logging and row-count
               reconciliation against source files.</li>
           <li>40 automated quality checks; caught three silent corruption bugs
               (encoding, line endings, dropped rows).</li>
-          <li>CI in GitHub Actions: a Linux SQL Server container rebuilds and re-verifies
-              the entire warehouse on every push.</li>
+          <li>A parity harness fingerprints both engines and diffs them — 296
+              measurements across 11 tables match exactly, so the migration is
+              provably lossless rather than assumed to be.</li>
+          <li>CI rebuilds and re-verifies <em>both</em> engines on every push.</li>
         </ul>
         <div class="chips mono">
-          <span>40 checks</span><span>116K rows</span><span>CI on every push</span>
+          <span>40 checks</span><span>116K rows</span><span>296-metric parity</span>
         </div>
       </article>
 
@@ -194,7 +197,8 @@
         </div>
         <div>
           <h4 class="mono">DATA ENGINEERING</h4>
-          <p>ETL / ELT · dimensional modeling · SQL Server / T-SQL · DuckDB · dbt · Airflow</p>
+          <p>ETL / ELT · dimensional modeling · SQL Server / T-SQL · PySpark · Delta Lake ·
+             Databricks · DuckDB · dbt · Airflow</p>
         </div>
         <div>
           <h4 class="mono">VIZ &amp; TOOLS</h4>
