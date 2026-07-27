@@ -112,11 +112,13 @@
           <li>Idempotent ELT into a DuckDB star schema — 2 dimensions, 8 fact tables,
               reconciliation tests agreeing to within 1e-6.</li>
           <li>Found and fixed a look-ahead bias that had overstated backtest returns ~3.5×.</li>
+          <li>Black-Scholes options engine — pricing, Greeks, implied vol — so hedge cards
+              quote numbers the engine computed, never the model's.</li>
           <li>Fine-tuned a local Qwen3-8B with QLoRA to draft the daily market reports,
               gated by blind evaluation.</li>
         </ul>
         <div class="chips mono">
-          <span>34 tickers</span><span>80 dbt checks</span><span>26 indicators</span>
+          <span>68 dbt checks</span><span>24 indicators</span><span>748 tests</span>
         </div>
       </article>
 
