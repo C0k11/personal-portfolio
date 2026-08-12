@@ -1,4 +1,4 @@
-"""Generate og.png — the link preview card, drawn with the same dusk palette
+"""Generate og.png - the link preview card, drawn with the same dusk palette
 as the site's canvas background so a shared link matches the page it opens.
 
 Run: py make-og.py   (regenerate only if the palette or copy changes)
@@ -68,7 +68,7 @@ img = ImageChops.add(img, glow)
 d = ImageDraw.Draw(img)
 d.text((72, 232), "Jerry Zhang", font=font(92, True), fill=(243, 236, 242))
 d.text((74, 348), "Data analyst & engineer", font=font(44), fill=(243, 236, 242))
-d.text((74, 412), "pipelines · warehouses · predictive models",
+d.text((74, 412), "pipelines \u00b7 warehouses \u00b7 predictive models",
        font=font(34), fill=(215, 195, 214))
 d.text((74, 108), "T O R O N T O", font=font(24), fill=(242, 176, 106))
 

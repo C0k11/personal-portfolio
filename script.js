@@ -1,5 +1,5 @@
 /* ============================================================
-   Dusk lake — hand-coded canvas background.
+   Dusk lake - hand-coded canvas background.
    Layers: sky gradient, stars, sun glow, drifting clouds,
    hill silhouettes, mirror water with shimmer + pointer
    ripples, drifting motes, shooting stars on click.
@@ -31,7 +31,7 @@
 
   /* ---------- build ---------- */
   function resize() {
-    DPR = 1; // scenic gradient bg — retina not worth the fill cost
+    DPR = 1; // scenic gradient bg - retina not worth the fill cost
     W = innerWidth;
     H = innerHeight;
     canvas.width = W * DPR;

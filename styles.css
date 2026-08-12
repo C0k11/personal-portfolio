@@ -1,6 +1,6 @@
 /* ============================================================
-   Dusk portfolio — palette drawn from a twilight lake:
-   indigo night → violet → magenta → coral horizon → amber sun
+   Dusk portfolio - palette drawn from a twilight lake:
+   indigo night -> violet -> magenta -> coral horizon -> amber sun
    ============================================================ */
 :root {
   --night:   #191430;
@@ -192,7 +192,7 @@ main {
 
 /* ---------- panels ---------- */
 .panel {
-  /* solid translucent — backdrop-filter over an animated canvas forces a
+  /* solid translucent - backdrop-filter over an animated canvas forces a
      full re-blur every frame and tanks the main thread */
   background: rgba(22, 17, 42, 0.88);
   border: 1px solid var(--panel-border);
@@ -213,7 +213,7 @@ main {
   margin-bottom: 0.45rem;
 }
 .panel ul li::before {
-  content: "—";
+  content: "\2014";
   position: absolute;
   left: 0;
   color: var(--coral);
