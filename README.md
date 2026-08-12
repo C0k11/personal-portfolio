@@ -1,8 +1,8 @@
-# Jerry Zhang — Portfolio
+# Jerry Zhang - Portfolio
 
 Personal site: data & ML projects, experience, contact.
 
-- Static — one HTML file, one stylesheet, one script. No frameworks, no build step.
+- Static - one HTML file, one stylesheet, one script. No frameworks, no build step.
 - The dusk-lake background is hand-coded canvas (sky, stars, parallax clouds,
   mirror water with pointer ripples, shooting stars on click). No image assets.
 - Respects `prefers-reduced-motion`; append `?static` to force a still frame.
