@@ -1,361 +1,418 @@
-/* ============================================================
-   Dusk lake - hand-coded canvas background.
-   Layers: sky gradient, stars, sun glow, drifting clouds,
-   hill silhouettes, mirror water with shimmer + pointer
-   ripples, drifting motes, shooting stars on click.
-   No images. Respects prefers-reduced-motion.
-   ============================================================ */
+/* Wallpaper Engine waterflow + ripple + godrays.
+   Background plate is layer_02 only. Dock/figure sit on top, undistorted.
+   Screen Y is top-down; GL vUv.y is bottom-up. Ripple coords must flip Y. */
 
 (() => {
   const canvas = document.getElementById("dusk");
-  const ctx = canvas.getContext("2d");
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches
     || location.search.includes("static");
   const mobile = matchMedia("(max-width: 640px)").matches;
+  const dprCap = mobile ? 1.5 : 3;
 
-  let W, H, DPR, HORIZON;
-  const base = document.createElement("canvas");   // prerendered static layers
-  const bctx = base.getContext("2d");
+  const plate = new Image();
+  const flow = new Image();
+  const dock = new Image();
+  const front = new Image();
+  const train = new Image();
+  const reflect = new Image();
+  plate.src = "assets/station.jpg";
+  flow.src = "assets/flow.jpg";
+  dock.src = "assets/dock.png";
+  front.src = "assets/front.png";
+  train.src = "assets/train.png";
+  reflect.src = "assets/reflect.png";
+  const TRAIN_Y0 = 0.35782, TRAIN_Y1 = 0.45320;
+  const REFL_Y0 = 0.25770, REFL_Y1 = 0.34834;
+  // Dock last opaque row is image y=1101. uv.y = 1 - y/1688.
+  const WATER_HI = 0.34775;
+  const TRAIN_SCROLL = 0.04;
 
-  // scene state
-  const stars = [];
-  const clouds = [];
-  const motes = [];
+  const pointer = { x: 0.5, y: 0.5, px: 0, py: 0 };
   const ripples = [];
-  const meteors = [];
-  let hills = [];
-
-  const pointer = { x: 0.5, y: 0.5, px: 0.35, py: 0.0 }; // normalized; px/py = eased parallax
-
+  const MAX_R = 8;
   const rand = (a, b) => a + Math.random() * (b - a);
 
-  /* ---------- build ---------- */
+  const VERT = `
+attribute vec2 aPos;
+varying vec2 vUv;
+void main() {
+  vUv = aPos * 0.5 + 0.5;
+  gl_Position = vec4(aPos, 0.0, 1.0);
+}`;
+
+  const FRAG = `
+precision mediump float;
+varying vec2 vUv;
+uniform sampler2D uPlate;
+uniform sampler2D uFlow;
+uniform sampler2D uDock;
+uniform sampler2D uFront;
+uniform sampler2D uTrain;
+uniform sampler2D uReflect;
+uniform vec2 uRes;
+uniform vec2 uTex;
+uniform vec2 uTrainY;
+uniform vec2 uReflY;
+uniform float uTime;
+uniform vec2 uParallax;
+uniform vec4 uRipples[8];
+uniform int uRippleN;
+uniform float uReduced;
+uniform float uScroll;
+uniform float uWaterHi;
+
+vec2 coverUv(vec2 uv) {
+  float va = uRes.x / uRes.y;
+  float ia = uTex.x / uTex.y;
+  vec2 c = uv;
+  if (va > ia) {
+    float s = ia / va;
+    c.y = (uv.y - 0.5) * s + 0.5;
+  } else {
+    float s = va / ia;
+    c.x = (uv.x - 0.5) * s + 0.5;
+  }
+  c += uParallax * vec2(-0.010, 0.006);
+  return c;
+}
+
+vec2 rippleOff(vec2 uv) {
+  vec2 acc = vec2(0.0);
+  for (int i = 0; i < 8; i++) {
+    vec4 r = uRipples[i];
+    float life = r.z;
+    vec2 d = uv - r.xy;
+    float dist = length(d);
+    float radius = life * 0.10;
+    float band = exp(-((dist - radius) * (dist - radius)) / 0.00028);
+    vec2 dir = dist > 0.0001 ? d / dist : vec2(0.0);
+    acc += dir * band * (1.0 - life) * r.w;
+  }
+  return acc;
+}
+
+vec4 overlayTex(vec4 col, sampler2D tex, vec2 uv) {
+  vec4 t = texture2D(tex, uv);
+  return mix(col, t, t.a);
+}
+
+vec4 overlayTrain(vec4 col, vec2 sampleUv, float scroll) {
+  float ty = (sampleUv.y - uTrainY.x) / max(uTrainY.y - uTrainY.x, 0.0001);
+  vec4 tr = texture2D(uTrain, vec2(fract(sampleUv.x + scroll), ty));
+  tr.a *= step(0.0, ty) * step(ty, 1.0);
+  return mix(col, tr, tr.a);
+}
+
+vec4 overlayRefl(vec4 col, vec2 sampleUv, float scroll) {
+  float ry = (sampleUv.y - uReflY.x) / max(uReflY.y - uReflY.x, 0.0001);
+  vec4 rf = texture2D(uReflect, vec2(fract(sampleUv.x + scroll), ry));
+  rf.a *= step(0.0, ry) * step(ry, 1.0);
+  return mix(col, rf, rf.a);
+}
+
+void main() {
+  vec2 uv = coverUv(vUv);
+  if (uReduced > 0.5) {
+    vec4 still = texture2D(uPlate, uv);
+    still = overlayTex(still, uDock, uv);
+    still = overlayTrain(still, uv, 0.0);
+    still = overlayRefl(still, uv, 0.0);
+    still = overlayTex(still, uFront, uv);
+    gl_FragColor = still;
+    return;
+  }
+
+  vec2 flowCol = texture2D(uFlow, uv).rg;
+  vec2 flowMask = (flowCol - vec2(0.498, 0.498)) * 2.0;
+  float flowAmt = length(flowMask);
+  float water = step(uv.y, uWaterHi);
+
+  float t = uTime * 0.59;
+  vec4 cycles = vec4(fract(t), fract(t + 0.5), fract(t + 0.25), fract(t + 0.75));
+  float blend = 2.0 * abs(cycles.x - 0.5);
+  float blend2 = 2.0 * abs(cycles.z - 0.5);
+  cycles -= 0.5;
+  vec2 amp = flowMask * 0.10;
+  amp.y *= 1.0 - water;
+  vec2 o1 = amp * cycles.x;
+  vec2 o2 = amp * cycles.y;
+  vec2 o3 = amp * cycles.z;
+  vec2 o4 = amp * cycles.w;
+
+  vec2 extra = vec2(rippleOff(vUv).x * water, 0.0);
+  vec2 base = uv + extra;
+
+  vec4 a0 = texture2D(uPlate, base);
+  vec4 f1 = mix(texture2D(uPlate, base + o1), texture2D(uPlate, base + o2), blend);
+  vec4 f2 = mix(texture2D(uPlate, base + o3), texture2D(uPlate, base + o4), blend2);
+  float phase = texture2D(uFlow, uv * 4.44).r;
+  vec4 flowed = mix(f1, f2, smoothstep(0.2, 0.8, phase));
+  vec4 col = mix(a0, flowed, clamp(flowAmt, 0.0, 1.0));
+
+  float scroll = uTime * uScroll;
+  col = overlayTex(col, uDock, uv);
+  col = overlayTrain(col, uv, scroll);
+  col = overlayRefl(col, vec2(base.x, uv.y), scroll);
+  col = overlayTex(col, uFront, uv);
+
+  vec2 sun = vec2(0.807, 0.509) + uParallax * vec2(-0.004, 0.0);
+  vec2 from = uv - sun;
+  float dist = length(from);
+  float ang = atan(from.y, from.x);
+  float rays = pow(abs(sin(ang * 7.0 + uTime * 0.12)), 10.0);
+  float fall = exp(-dist * 3.2);
+  col.rgb += vec3(0.992, 0.60, 0.588) * rays * fall * 0.11;
+
+  gl_FragColor = col;
+}`;
+
+  let gl, prog, locs, buf, W, H, dpr = 1, ready = false;
+
+  function compile(type, src) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+      throw new Error(gl.getShaderInfoLog(s) || "shader");
+    }
+    return s;
+  }
+
+  function initGl() {
+    gl = canvas.getContext("webgl", { alpha: false, antialias: false, powerPreference: "high-performance" });
+    if (!gl) return false;
+    const vs = compile(gl.VERTEX_SHADER, VERT);
+    const fs = compile(gl.FRAGMENT_SHADER, FRAG);
+    prog = gl.createProgram();
+    gl.attachShader(prog, vs);
+    gl.attachShader(prog, fs);
+    gl.linkProgram(prog);
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+      throw new Error(gl.getProgramInfoLog(prog) || "link");
+    }
+    gl.useProgram(prog);
+    buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+      -1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1
+    ]), gl.STATIC_DRAW);
+    const aPos = gl.getAttribLocation(prog, "aPos");
+    gl.enableVertexAttribArray(aPos);
+    gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+    locs = {
+      uPlate: gl.getUniformLocation(prog, "uPlate"),
+      uFlow: gl.getUniformLocation(prog, "uFlow"),
+      uDock: gl.getUniformLocation(prog, "uDock"),
+      uFront: gl.getUniformLocation(prog, "uFront"),
+      uTrain: gl.getUniformLocation(prog, "uTrain"),
+      uReflect: gl.getUniformLocation(prog, "uReflect"),
+      uRes: gl.getUniformLocation(prog, "uRes"),
+      uTex: gl.getUniformLocation(prog, "uTex"),
+      uTrainY: gl.getUniformLocation(prog, "uTrainY"),
+      uReflY: gl.getUniformLocation(prog, "uReflY"),
+      uTime: gl.getUniformLocation(prog, "uTime"),
+      uParallax: gl.getUniformLocation(prog, "uParallax"),
+      uRippleN: gl.getUniformLocation(prog, "uRippleN"),
+      uReduced: gl.getUniformLocation(prog, "uReduced"),
+      uScroll: gl.getUniformLocation(prog, "uScroll"),
+      uWaterHi: gl.getUniformLocation(prog, "uWaterHi"),
+      uRipples: [],
+    };
+    for (let i = 0; i < MAX_R; i++) {
+      locs.uRipples[i] = gl.getUniformLocation(prog, "uRipples[" + i + "]");
+    }
+    upload(plate, 0, false);
+    upload(flow, 1, false);
+    upload(dock, 2, true);
+    upload(front, 3, true);
+    upload(train, 4, true);
+    upload(reflect, 5, true);
+    gl.uniform1i(locs.uPlate, 0);
+    gl.uniform1i(locs.uFlow, 1);
+    gl.uniform1i(locs.uDock, 2);
+    gl.uniform1i(locs.uFront, 3);
+    gl.uniform1i(locs.uTrain, 4);
+    gl.uniform1i(locs.uReflect, 5);
+    gl.uniform2f(locs.uTex, plate.naturalWidth, plate.naturalHeight);
+    gl.uniform2f(locs.uTrainY, TRAIN_Y0, TRAIN_Y1);
+    gl.uniform2f(locs.uReflY, REFL_Y0, REFL_Y1);
+    gl.uniform1f(locs.uReduced, reduced ? 1 : 0);
+    gl.uniform1f(locs.uScroll, reduced ? 0 : TRAIN_SCROLL);
+    gl.uniform1f(locs.uWaterHi, WATER_HI);
+    return true;
+  }
+
+  function upload(img, unit, rgba) {
+    const t = gl.createTexture();
+    gl.activeTexture(gl.TEXTURE0 + unit);
+    gl.bindTexture(gl.TEXTURE_2D, t);
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    const fmt = rgba ? gl.RGBA : gl.RGB;
+    gl.texImage2D(gl.TEXTURE_2D, 0, fmt, fmt, gl.UNSIGNED_BYTE, img);
+    return t;
+  }
+
   function resize() {
-    DPR = 1; // scenic gradient bg - retina not worth the fill cost
+    dpr = Math.min(window.devicePixelRatio || 1, dprCap);
     W = innerWidth;
     H = innerHeight;
-    canvas.width = W * DPR;
-    canvas.height = H * DPR;
-    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-    HORIZON = H * 0.66;
-    buildScene();
-    renderBase();
+    canvas.width = Math.round(W * dpr);
+    canvas.height = Math.round(H * dpr);
+    canvas.style.width = W + "px";
+    canvas.style.height = H + "px";
+    if (gl) gl.viewport(0, 0, canvas.width, canvas.height);
   }
 
-  // sky gradient + hill silhouettes + water base: drawn once per resize,
-  // blitted every frame (per-frame gradient fills were saturating the thread)
-  function renderBase() {
-    base.width = W; base.height = H;
-    const g = bctx.createLinearGradient(0, 0, 0, HORIZON);
-    g.addColorStop(0.0, "#191430");
-    g.addColorStop(0.42, "#46285c");
-    g.addColorStop(0.72, "#9c4478");
-    g.addColorStop(0.92, "#e57a5a");
-    g.addColorStop(1.0, "#f2b06a");
-    bctx.fillStyle = g;
-    bctx.fillRect(0, 0, W, HORIZON);
-    for (const hl of hills) {
-      bctx.fillStyle = hl.color;
-      bctx.beginPath();
-      bctx.moveTo(-20, HORIZON + 1);
-      for (const p of hl.pts) bctx.lineTo(p.x * W, p.y);
-      bctx.lineTo(W + 20, HORIZON + 1);
-      bctx.closePath();
-      bctx.fill();
-    }
-    const wg = bctx.createLinearGradient(0, HORIZON, 0, H);
-    wg.addColorStop(0.0, "#d9946b");
-    wg.addColorStop(0.12, "#a3527c");
-    wg.addColorStop(0.45, "#3d2456");
-    wg.addColorStop(1.0, "#141026");
-    bctx.fillStyle = wg;
-    bctx.fillRect(0, HORIZON, W, H - HORIZON);
-  }
-
-  function buildScene() {
-    stars.length = 0;
-    const nStars = mobile ? 60 : 140;
-    for (let i = 0; i < nStars; i++) {
-      const y = Math.pow(Math.random(), 1.7) * HORIZON * 0.75; // denser high up
-      stars.push({
-        x: Math.random() * W, y,
-        r: rand(0.4, 1.4),
-        tw: rand(0.5, 1.5),      // twinkle speed
-        ph: rand(0, Math.PI * 2) // phase
-      });
-    }
-
-    clouds.length = 0;
-    const bands = [
-      { y: 0.18, scale: 1.6, speed: 4.0, tint: "rgba(70, 40, 92, 0.55)" },   // violet, high
-      { y: 0.34, scale: 1.2, speed: 7.5, tint: "rgba(156, 68, 120, 0.5)" },  // magenta, mid
-      { y: 0.50, scale: 0.9, speed: 12,  tint: "rgba(229, 122, 90, 0.42)" }, // coral, low
-    ];
-    for (const band of bands) {
-      const n = mobile ? 3 : 5;
-      for (let i = 0; i < n; i++) {
-        clouds.push({
-          x: Math.random() * W * 1.4 - W * 0.2,
-          y: band.y * HORIZON + rand(-20, 20),
-          w: rand(160, 380) * band.scale,
-          h: rand(22, 44) * band.scale,
-          speed: band.speed * rand(0.7, 1.3), // px per second
-          tint: band.tint,
-          par: band.scale * 8, // parallax strength
-        });
-      }
-    }
-
-    motes.length = 0;
-    const nMotes = mobile ? 8 : 18;
-    for (let i = 0; i < nMotes; i++) {
-      motes.push({
-        x: Math.random() * W,
-        y: rand(HORIZON * 0.5, H),
-        r: rand(0.8, 1.8),
-        vx: rand(-6, 6), vy: rand(-4, -1),
-        ph: rand(0, Math.PI * 2),
-      });
-    }
-
-    // two hill silhouette layers as point lists
-    hills = [
-      { pts: ridge(0.86, 0.055), color: "#2b1d45", par: 6 },  // far
-      { pts: ridge(0.93, 0.075), color: "#1d1435", par: 12 }, // near
-    ];
-  }
-
-  function ridge(base, amp) {
-    // rolling ridge across the horizon; y values relative to HORIZON
-    const pts = [];
-    const n = 24;
-    let y = rand(-amp, amp);
-    for (let i = 0; i <= n; i++) {
-      y = y * 0.6 + rand(-amp, amp) * 0.4;
-      pts.push({ x: i / n, y });
-    }
-    return pts.map(p => ({ x: p.x, y: HORIZON * base + p.y * H }));
-  }
-
-  /* ---------- draw helpers ---------- */
-  function drawSun(t) {
-    const sx = W * 0.62 + pointer.px * -14;
-    const sy = HORIZON - H * 0.03;
-    const pulse = reduced ? 1 : 1 + Math.sin(t / 3200) * 0.05;
-    const r = Math.min(W, H) * 0.16 * pulse;
-    const g = ctx.createRadialGradient(sx, sy, 0, sx, sy, r);
-    g.addColorStop(0, "rgba(255, 214, 150, 0.85)");
-    g.addColorStop(0.35, "rgba(242, 176, 106, 0.35)");
-    g.addColorStop(1, "rgba(242, 176, 106, 0)");
-    ctx.fillStyle = g;
-    ctx.fillRect(sx - r, sy - r, r * 2, r * 2);
-    return { sx, sy };
-  }
-
-  function drawStars(t) {
-    ctx.save();
-    for (const s of stars) {
-      const a = reduced ? 0.7 : 0.35 + 0.5 * Math.abs(Math.sin(t / 1000 * s.tw + s.ph));
-      const fade = 1 - s.y / (HORIZON * 0.9); // fade toward horizon
-      ctx.globalAlpha = a * Math.max(fade, 0);
-      ctx.fillStyle = "#f3ecf2";
-      ctx.beginPath();
-      ctx.arc(s.x + pointer.px * -6, s.y + pointer.py * -4, s.r, 0, 7);
-      ctx.fill();
-    }
-    ctx.restore();
-  }
-
-  function drawClouds(dt) {
-    for (const c of clouds) {
-      if (!reduced) {
-        c.x += c.speed * dt;
-        if (c.x - c.w > W) c.x = -c.w;
-      }
-      const x = c.x + pointer.px * -c.par;
-      const y = c.y + pointer.py * -c.par * 0.4;
-      const g = ctx.createRadialGradient(x, y, 0, x, y, c.w / 2);
-      g.addColorStop(0, c.tint);
-      g.addColorStop(1, "rgba(0,0,0,0)");
-      ctx.save();
-      ctx.translate(x, y);
-      ctx.scale(1, c.h / c.w * 2);
-      ctx.fillStyle = g;
-      ctx.beginPath();
-      ctx.arc(0, 0, c.w / 2, 0, 7);
-      ctx.fill();
-      ctx.restore();
-    }
-  }
-
-  function drawWater(t, sun) {
-    // sun pillar
-    const pw = Math.min(W, H) * 0.09;
-    const pg = ctx.createLinearGradient(0, HORIZON, 0, H);
-    pg.addColorStop(0, "rgba(255, 210, 150, 0.4)");
-    pg.addColorStop(0.5, "rgba(242, 176, 106, 0.12)");
-    pg.addColorStop(1, "rgba(242, 176, 106, 0)");
-    ctx.save();
-    ctx.fillStyle = pg;
-    const wob = reduced ? 0 : Math.sin(t / 900) * pw * 0.12;
-    ctx.beginPath();
-    ctx.moveTo(sun.sx - pw / 2 + wob, HORIZON);
-    ctx.lineTo(sun.sx + pw / 2 + wob, HORIZON);
-    ctx.lineTo(sun.sx + pw * 1.6, H);
-    ctx.lineTo(sun.sx - pw * 1.6, H);
-    ctx.closePath();
-    ctx.fill();
-    ctx.restore();
-
-    // shimmer bands
-    if (!reduced) {
-      ctx.save();
-      ctx.globalAlpha = 0.1;
-      ctx.fillStyle = "#f2b06a";
-      const rows = mobile ? 10 : 22;
-      for (let i = 0; i < rows; i++) {
-        const frac = i / rows;
-        const y = HORIZON + frac * (H - HORIZON);
-        const len = 30 + 160 * frac;
-        const x = (Math.sin(t / (1400 + i * 130) + i * 2.1) * 0.5 + 0.5) * (W - len);
-        ctx.fillRect(x, y, len, 1 + frac * 1.6);
-      }
-      ctx.restore();
-    }
-  }
-
-  function drawRipples(dt) {
-    for (let i = ripples.length - 1; i >= 0; i--) {
+  function paint(t) {
+    if (!gl || !ready) return;
+    gl.uniform2f(locs.uRes, canvas.width, canvas.height);
+    gl.uniform1f(locs.uTime, t);
+    gl.uniform2f(locs.uParallax, pointer.px, pointer.py);
+    const n = Math.min(ripples.length, MAX_R);
+    gl.uniform1i(locs.uRippleN, n);
+    for (let i = 0; i < MAX_R; i++) {
       const r = ripples[i];
-      r.age += dt;
-      const life = r.age / r.max;
-      if (life >= 1) { ripples.splice(i, 1); continue; }
-      const radius = 6 + life * r.spread;
-      ctx.save();
-      ctx.globalAlpha = 0.5 * (1 - life);
-      ctx.strokeStyle = "#f2c48f";
-      ctx.lineWidth = 1.2;
-      ctx.beginPath();
-      ctx.ellipse(r.x, r.y, radius, radius * 0.28, 0, 0, 7); // perspective squash
-      ctx.stroke();
-      ctx.restore();
+      if (r) gl.uniform4f(locs.uRipples[i], r.x, r.y, r.age / r.max, r.amp);
+      else gl.uniform4f(locs.uRipples[i], 0, 0, 1, 0);
     }
+    gl.drawArrays(gl.TRIANGLES, 0, 6);
   }
 
-  function drawMotes(t, dt) {
-    ctx.save();
-    for (const m of motes) {
-      if (!reduced) {
-        m.x += m.vx * dt; m.y += m.vy * dt;
-        if (m.y < HORIZON * 0.45 || m.x < -10 || m.x > W + 10) {
-          m.x = Math.random() * W; m.y = rand(H * 0.75, H); m.vy = rand(-4, -1);
-        }
-      }
-      ctx.globalAlpha = 0.25 + 0.3 * Math.abs(Math.sin(t / 800 + m.ph));
-      ctx.fillStyle = "#f2c48f";
-      ctx.beginPath();
-      ctx.arc(m.x, m.y, m.r, 0, 7);
-      ctx.fill();
+  function draw2dStill() {
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    const cw = canvas.width, ch = canvas.height;
+    const ia = plate.naturalWidth / plate.naturalHeight;
+    const va = cw / ch;
+    let dw, dh;
+    if (va > ia) { dw = cw; dh = cw / ia; }
+    else { dh = ch; dw = ch * ia; }
+    ctx.fillStyle = "#121a4a";
+    ctx.fillRect(0, 0, cw, ch);
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = "high";
+    const dx = (cw - dw) / 2, dy = (ch - dh) / 2;
+    ctx.drawImage(plate, dx, dy, dw, dh);
+    if (dock.naturalWidth) ctx.drawImage(dock, dx, dy, dw, dh);
+    const ph = plate.naturalHeight || 1688;
+    if (train.naturalWidth) {
+      const th = train.naturalHeight / ph * dh;
+      const ty = dy + (1 - TRAIN_Y1) * dh;
+      ctx.drawImage(train, dx, ty, dw, th);
     }
-    ctx.restore();
+    if (reflect.naturalWidth) {
+      const rh = reflect.naturalHeight / ph * dh;
+      const ry = dy + (1 - REFL_Y1) * dh;
+      ctx.drawImage(reflect, dx, ry, dw, rh);
+    }
+    if (front.naturalWidth) ctx.drawImage(front, dx, dy, dw, dh);
   }
 
-  function drawMeteors(dt) {
-    for (let i = meteors.length - 1; i >= 0; i--) {
-      const m = meteors[i];
-      m.x += m.vx * dt; m.y += m.vy * dt; m.age += dt;
-      if (m.age > m.max) { meteors.splice(i, 1); continue; }
-      const a = 1 - m.age / m.max;
-      ctx.save();
-      ctx.globalAlpha = a * 0.9;
-      const tail = ctx.createLinearGradient(m.x, m.y, m.x - m.vx * 0.18, m.y - m.vy * 0.18);
-      tail.addColorStop(0, "#fff3dd");
-      tail.addColorStop(1, "rgba(255, 243, 221, 0)");
-      ctx.strokeStyle = tail;
-      ctx.lineWidth = 1.6;
-      ctx.beginPath();
-      ctx.moveTo(m.x, m.y);
-      ctx.lineTo(m.x - m.vx * 0.18, m.y - m.vy * 0.18);
-      ctx.stroke();
-      ctx.restore();
-    }
-  }
-
-  /* ---------- main loop ---------- */
   let last = 0;
-  function frame(t) {
-    const dt = Math.min((t - last) / 1000, 0.05);
-    last = t;
-
-    // eased pointer parallax
+  function frame(now) {
+    const dt = Math.min((now - last) / 1000, 0.05);
+    last = now;
     if (!reduced) {
-      pointer.px += ((pointer.x - 0.5) * 2 - pointer.px) * 0.04;
-      pointer.py += ((pointer.y - 0.5) * 2 - pointer.py) * 0.04;
+      pointer.px += ((pointer.x - 0.5) * 2 - pointer.px) * 0.05;
+      pointer.py += ((pointer.y - 0.5) * 2 - pointer.py) * 0.05;
+      for (let i = ripples.length - 1; i >= 0; i--) {
+        ripples[i].age += dt;
+        if (ripples[i].age > ripples[i].max) ripples.splice(i, 1);
+      }
     }
-
-    ctx.drawImage(base, 0, 0);
-    drawStars(t);
-    const sun = drawSun(t);
-    drawClouds(dt);
-    drawWater(t, sun);
-    drawRipples(dt);
-    drawMotes(t, dt);
-    drawMeteors(dt);
-
-    if (!reduced) setTimeout(() => requestAnimationFrame(frame), 33); // ~30fps is plenty
+    paint(now / 1000);
+    if (!reduced) requestAnimationFrame(frame);
   }
 
-  /* ---------- input ---------- */
+  function plateUv(nx, ny) {
+    const va = W / Math.max(H, 1);
+    const ia = (plate.naturalWidth || 3652) / (plate.naturalHeight || 1688);
+    let x = nx;
+    let y = 1 - ny;
+    if (va > ia) {
+      const s = ia / va;
+      y = (y - 0.5) * s + 0.5;
+    } else {
+      const s = va / ia;
+      x = (x - 0.5) * s + 0.5;
+    }
+    return { x, y };
+  }
+
+  function inWater(nx, ny) {
+    return plateUv(nx, ny).y < WATER_HI;
+  }
+
   let lastRipple = 0;
   addEventListener("pointermove", (e) => {
-    pointer.x = e.clientX / W;
-    pointer.y = e.clientY / H;
-    if (reduced) return;
-    // ripples only over the water
-    if (e.clientY > HORIZON && performance.now() - lastRipple > 120) {
+    pointer.x = e.clientX / Math.max(W, 1);
+    pointer.y = e.clientY / Math.max(H, 1);
+    if (reduced || !ready || !inWater(pointer.x, pointer.y)) return;
+    if (performance.now() - lastRipple > 110) {
       lastRipple = performance.now();
-      ripples.push({ x: e.clientX, y: e.clientY, age: 0, max: rand(1.2, 1.8), spread: rand(30, 70) });
-      if (ripples.length > 24) ripples.shift();
+      ripples.push({
+        x: pointer.x, y: 1 - pointer.y, age: 0,
+        max: rand(0.9, 1.4), amp: rand(0.004, 0.007),
+      });
+      if (ripples.length > MAX_R) ripples.shift();
     }
   }, { passive: true });
 
   addEventListener("pointerdown", (e) => {
-    if (reduced) return;
-    if (e.clientY <= HORIZON) {
-      // shooting star from near the click, arcing down-right
-      meteors.push({
-        x: e.clientX + rand(-40, 40), y: Math.max(e.clientY - rand(30, 80), 10),
-        vx: rand(320, 520), vy: rand(120, 220),
-        age: 0, max: rand(0.5, 0.8),
-      });
-    } else {
-      ripples.push({ x: e.clientX, y: e.clientY, age: 0, max: 2.2, spread: 110 });
-    }
+    if (reduced || !ready) return;
+    pointer.x = e.clientX / Math.max(W, 1);
+    pointer.y = e.clientY / Math.max(H, 1);
+    if (!inWater(pointer.x, pointer.y)) return;
+    ripples.push({
+      x: pointer.x, y: 1 - pointer.y, age: 0,
+      max: 1.6, amp: 0.012,
+    });
+    if (ripples.length > MAX_R) ripples.shift();
   }, { passive: true });
 
-  addEventListener("resize", resize);
+  addEventListener("resize", () => { resize(); if (ready && reduced) paint(0); });
 
-  /* ---------- grain tile (procedural, tiny) ---------- */
   function makeGrain() {
     const g = document.createElement("canvas");
     g.width = g.height = 96;
     const gctx = g.getContext("2d");
-    const img = gctx.createImageData(96, 96);
-    for (let i = 0; i < img.data.length; i += 4) {
+    const imgd = gctx.createImageData(96, 96);
+    for (let i = 0; i < imgd.data.length; i += 4) {
       const v = 118 + Math.random() * 20 | 0;
-      img.data[i] = img.data[i + 1] = img.data[i + 2] = v;
-      img.data[i + 3] = 26;
+      imgd.data[i] = imgd.data[i + 1] = imgd.data[i + 2] = v;
+      imgd.data[i + 3] = 14;
     }
-    gctx.putImageData(img, 0, 0);
+    gctx.putImageData(imgd, 0, 0);
     document.querySelector(".grain").style.backgroundImage = `url(${g.toDataURL()})`;
   }
 
-  /* ---------- go ---------- */
-  resize();
-  makeGrain();
-  if (reduced) {
-    frame(0); // single static frame
-  } else {
-    requestAnimationFrame((t) => { last = t; requestAnimationFrame(frame); });
+  function start() {
+    resize();
+    makeGrain();
+    let ok = false;
+    try { ok = initGl(); } catch (e) { ok = false; }
+    ready = true;
+    if (!ok) { draw2dStill(); return; }
+    if (reduced) paint(0);
+    else requestAnimationFrame((t) => { last = t; requestAnimationFrame(frame); });
   }
+
+  let pending = 6;
+  function one() { pending -= 1; if (pending === 0) start(); }
+  plate.onload = one;
+  flow.onload = one;
+  dock.onload = one;
+  front.onload = one;
+  train.onload = one;
+  reflect.onload = one;
+  plate.onerror = one;
+  flow.onerror = one;
+  dock.onerror = one;
+  front.onerror = one;
+  train.onerror = one;
+  reflect.onerror = one;
 })();

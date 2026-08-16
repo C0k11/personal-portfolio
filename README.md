@@ -3,9 +3,11 @@
 Personal site: data & ML projects, experience, contact.
 
 - Static - one HTML file, one stylesheet, one script. No frameworks, no build step.
-- The dusk-lake background is hand-coded canvas (sky, stars, parallax clouds,
-  mirror water with pointer ripples, shooting stars on click). No image assets.
-- Respects `prefers-reduced-motion`; append `?static` to force a still frame.
+- Background is Lifeline's evening station plate (3652x1688) with a
+  WebGL port of the wallpaper's waterflow / ripple / waves / godrays.
+  Dock and figure are a separate overlay; only the background plate is distorted.
+  Train and reflection are separate PNG strips that scroll horizontally.
+  Respects `prefers-reduced-motion`; append `?static` for a still frame.
 
 Deployed on Vercel from `main`.
 

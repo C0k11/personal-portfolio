@@ -1,30 +1,14 @@
-"""Generate og.png - the link preview card, drawn with the same dusk palette
-as the site's canvas background so a shared link matches the page it opens.
+"""Generate og.png from the station photo plus nameplate text.
 
-Run: py make-og.py   (regenerate only if the palette or copy changes)
+Run: py -X utf8 make-og.py
 """
 from pathlib import Path
 
-from PIL import Image, ImageChops, ImageDraw, ImageFilter, ImageFont
+from PIL import Image, ImageDraw, ImageFont
 
 W, H = 1200, 630
-HORIZON = int(H * 0.66)
 OUT = Path(__file__).parent / "og.png"
-
-# same stops as the canvas sky/water in script.js
-SKY = [(0.00, (25, 20, 48)), (0.42, (70, 40, 92)), (0.72, (156, 68, 120)),
-       (0.92, (229, 122, 90)), (1.00, (242, 176, 106))]
-WATER = [(0.00, (217, 148, 107)), (0.12, (163, 82, 124)),
-         (0.45, (61, 36, 86)), (1.00, (20, 16, 38))]
-
-
-def lerp(stops, t):
-    for i in range(len(stops) - 1):
-        (p0, c0), (p1, c1) = stops[i], stops[i + 1]
-        if p0 <= t <= p1:
-            f = 0 if p1 == p0 else (t - p0) / (p1 - p0)
-            return tuple(round(a + (b - a) * f) for a, b in zip(c0, c1))
-    return stops[-1][1]
+BG = Path(__file__).parent / "assets" / "station-og.jpg"
 
 
 def font(size, bold=False):
@@ -36,41 +20,27 @@ def font(size, bold=False):
     return ImageFont.load_default()
 
 
-img = Image.new("RGB", (W, H))
-d = ImageDraw.Draw(img)
+img = Image.open(BG).convert("RGB")
+if img.size != (W, H):
+    img = img.resize((W, H), Image.Resampling.LANCZOS)
 
-for y in range(HORIZON):
-    d.line([(0, y), (W, y)], fill=lerp(SKY, y / HORIZON))
-for y in range(HORIZON, H):
-    d.line([(0, y), (W, y)], fill=lerp(WATER, (y - HORIZON) / (H - HORIZON)))
-
-# Sun glow + its reflection, built on a full-size black layer and added in one
-# pass. Compositing a cropped region instead leaves a visible rectangular seam.
-glow = Image.new("RGB", (W, H), (0, 0, 0))
-gd = ImageDraw.Draw(glow)
-sx, sy, r = int(W * 0.72), HORIZON - 18, 175
-for i in range(r, 0, -2):
-    a = (1 - i / r) ** 2.6
-    gd.ellipse([sx - i, sy - i, sx + i, sy + i],
-               fill=(round(210 * a), round(168 * a), round(112 * a)))
-for y in range(HORIZON, H):                       # reflection, fading down and outward
-    f = (y - HORIZON) / (H - HORIZON)
-    half = int(22 + 105 * f)
-    v = (1 - f) ** 1.7
-    for step in range(6):                         # nested widths -> horizontal falloff
-        w = int(half * (1 - step / 6))
-        a = v * (step + 1) / 6 * 0.42
-        gd.line([(sx - w, y), (sx + w, y)],
-                fill=(round(150 * a), round(110 * a), round(70 * a)))
-glow = glow.filter(ImageFilter.GaussianBlur(22))
-img = ImageChops.add(img, glow)
+# left veil so type stays readable on the bright horizon
+veil = Image.new("RGB", (W, H), (12, 18, 52))
+mask = Image.new("L", (W, H), 0)
+md = ImageDraw.Draw(mask)
+for x in range(W):
+    a = 0
+    if x < 720:
+        a = int(150 * (1 - x / 720) ** 1.15)
+    md.line([(x, 0), (x, H)], fill=a)
+img = Image.composite(veil, img, mask)
 
 d = ImageDraw.Draw(img)
-d.text((72, 232), "Jerry Zhang", font=font(92, True), fill=(243, 236, 242))
-d.text((74, 348), "Data analyst & engineer", font=font(44), fill=(243, 236, 242))
-d.text((74, 412), "pipelines \u00b7 warehouses \u00b7 predictive models",
-       font=font(34), fill=(215, 195, 214))
-d.text((74, 108), "T O R O N T O", font=font(24), fill=(242, 176, 106))
+d.text((72, 168), "Jerry Zhang", font=font(92, True), fill=(238, 241, 250))
+d.text((74, 284), "Data analyst & engineer", font=font(44), fill=(238, 241, 250))
+d.text((74, 348), "pipelines \u00b7 warehouses \u00b7 predictive models",
+       font=font(34), fill=(183, 192, 228))
+d.text((74, 88), "T O R O N T O", font=font(24), fill=(255, 200, 154))
 
-img.save(OUT, quality=92)
+img.save(OUT, quality=90)
 print(f"wrote {OUT} ({OUT.stat().st_size / 1024:.0f} KB)")

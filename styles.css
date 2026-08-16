@@ -1,21 +1,19 @@
-/* ============================================================
-   Dusk portfolio - palette drawn from a twilight lake:
-   indigo night -> violet -> magenta -> coral horizon -> amber sun
-   ============================================================ */
+/* Evening station palette, sampled from the workshop scene:
+   deep blue night -> indigo -> magenta -> pink -> peach horizon */
 :root {
-  --night:   #191430;
-  --violet:  #46285c;
-  --magenta: #9c4478;
-  --coral:   #e57a5a;
-  --amber:   #f2b06a;
+  --night:   #121a4a;
+  --violet:  #2a3aad;
+  --magenta: #ab458e;
+  --coral:   #e8909a;
+  --amber:   #ffc89a;
 
-  --ink:       #f3ecf2;
-  --ink-soft:  #c5b3cf;
-  --ink-faint: #9784a8;
+  --ink:       #eef1fa;
+  --ink-soft:  #b7c0e4;
+  --ink-faint: #7d89b8;
 
-  --panel:        rgba(24, 19, 46, 0.66);
-  --panel-border: rgba(242, 176, 106, 0.16);
-  --panel-line:   rgba(242, 176, 106, 0.32);
+  --panel:        rgba(12, 18, 52, 0.66);
+  --panel-border: rgba(255, 200, 154, 0.16);
+  --panel-line:   rgba(255, 200, 154, 0.32);
 
   --serif: "Fraunces", Georgia, serif;
   --sans:  "Source Sans 3", "Segoe UI", sans-serif;
@@ -44,6 +42,7 @@ body {
   width: 100vw;
   height: 100vh;
   z-index: -2;
+  pointer-events: none;
 }
 
 .grain {
@@ -64,7 +63,7 @@ body {
   align-items: center;
   padding: 1.1rem 2rem;
   z-index: 10;
-  background: linear-gradient(rgba(25, 20, 48, 0.55), transparent);
+  background: linear-gradient(rgba(18, 26, 74, 0.55), transparent);
 }
 
 .nav-name {
@@ -118,7 +117,7 @@ main {
   line-height: 1.02;
   letter-spacing: -0.01em;
   text-wrap: balance;
-  text-shadow: 0 2px 40px rgba(25, 20, 48, 0.8);
+  text-shadow: 0 2px 40px rgba(12, 18, 52, 0.85);
 }
 
 .hero-line {
@@ -129,14 +128,14 @@ main {
   margin-top: 1.4rem;
   max-width: 34ch;
   text-wrap: balance;
-  text-shadow: 0 1px 24px rgba(25, 20, 48, 0.9);
+  text-shadow: 0 1px 24px rgba(12, 18, 52, 0.9);
 }
 
 .hero-sub {
   color: var(--ink-soft);
   max-width: 58ch;
   margin-top: 1.1rem;
-  text-shadow: 0 1px 16px rgba(25, 20, 48, 0.9);
+  text-shadow: 0 1px 16px rgba(12, 18, 52, 0.9);
 }
 
 .hero-actions {
@@ -151,7 +150,7 @@ main {
   color: var(--ink);
   text-decoration: none;
   border: 1px solid var(--panel-line);
-  background: rgba(24, 19, 46, 0.45);
+  background: rgba(12, 18, 52, 0.45);
   padding: 0.55rem 1rem;
   letter-spacing: 0.04em;
   transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
@@ -159,7 +158,7 @@ main {
 .hero-actions a:hover, .hero-actions a:focus-visible {
   color: var(--amber);
   border-color: var(--amber);
-  background: rgba(24, 19, 46, 0.7);
+  background: rgba(12, 18, 52, 0.7);
 }
 
 .hero-hint {
@@ -194,7 +193,7 @@ main {
 .panel {
   /* solid translucent - backdrop-filter over an animated canvas forces a
      full re-blur every frame and tanks the main thread */
-  background: rgba(22, 17, 42, 0.88);
+  background: rgba(12, 18, 52, 0.88);
   border: 1px solid var(--panel-border);
   border-radius: 6px;
   padding: 1.6rem 1.8rem;
