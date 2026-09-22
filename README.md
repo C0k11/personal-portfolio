@@ -15,5 +15,5 @@ Deployed on Vercel from `main`.
 
 - **Email**: shienzhang542@gmail.com
 - **GitHub**: [github.com/C0k11](https://github.com/C0k11)
-- **LinkedIn**: [linkedin.com/in/jerry-zhang-575628300](https://www.linkedin.com/in/jerry-zhang-575628300)
+- **LinkedIn**: [linkedin.com/in/jerryzhang-data](https://www.linkedin.com/in/jerryzhang-data)
 - **Location**: Toronto, ON, Canada
