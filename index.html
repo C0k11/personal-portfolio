@@ -104,6 +104,34 @@
 
       <article class="panel project">
         <div class="project-head">
+          <h3><a href="https://github.com/C0k11/vlm-product-attributes" target="_blank" rel="noopener">VLM Product Attributes</a></h3>
+          <span class="mono proj-when">Sep 2026</span>
+        </div>
+        <p class="project-tag">Fine-tuned vision-language model on product photos</p>
+        <p>Reads a product photo and returns its type, color and material as JSON. Built on
+           Amazon Berkeley Objects, scored on a leak-checked test split of 5,437 listings that
+           was frozen by hash before any model saw it.</p>
+        <ul>
+          <li>LoRA fine-tuning of Qwen3.5-4B lifted photo-only accuracy from 0.70 / 0.72 / 0.80
+              zero-shot to 0.86 / 0.79 / 0.88 (type / color / material).</li>
+          <li>Measured against strong baselines with paired significance tests: it beats a CLIP
+              linear probe on color and ties it on the other two. Given the product title too, it
+              reaches 0.92 / 0.93 / 0.92, the best color score of any method, though a TF-IDF + CLIP
+              baseline is still better on material.</li>
+          <li>Returned valid JSON for every test image, even without constrained decoding.</li>
+          <li>Served with vLLM on one RTX 4090. A shorter prompt after fine-tuning, a merged
+              adapter and FP8 weights took throughput on the val split from 23 to 64 images/s;
+              FP8 costs 0.65 points on color.</li>
+          <li>QLoRA comparison: 29% less training memory and 27% slower training, for 0.2 to 1.1
+              points of accuracy.</li>
+        </ul>
+        <div class="chips mono">
+          <span>5,437 test listings</span><span>2.8&times; throughput</span><span>valid JSON, unconstrained</span>
+        </div>
+      </article>
+
+      <article class="panel project">
+        <div class="project-head">
           <h3><a href="https://github.com/C0k11/stock-share-Helper" target="_blank" rel="noopener">QuantAI</a></h3>
           <span class="mono proj-when">Since Nov 2025</span>
         </div>
@@ -211,7 +239,7 @@
         </div>
         <div>
           <h4 class="mono">LLM &amp; VISION</h4>
-          <p>PyTorch &middot; QLoRA / LoRA &middot; DPO &middot; RAG &middot; prompt engineering &middot; YOLO &middot; OpenCV</p>
+          <p>PyTorch &middot; QLoRA / LoRA &middot; DPO &middot; vLLM &middot; VLMs (Qwen-VL) &middot; CLIP &middot; RAG &middot; prompt engineering &middot; YOLO &middot; OpenCV</p>
         </div>
         <div>
           <h4 class="mono">CLOUD &amp; DEVOPS</h4>
